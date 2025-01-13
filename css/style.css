@@ -1,0 +1,241 @@
+@import url('https://fonts.cdnfonts.com/css/manrope?styles=21011,21013,21009,21010,21012,21008');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  list-style-type: none;
+  text-decoration: none;
+  font-family: 'Manrope', sans-serif;
+  color: #000;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+textarea{
+  resize: none;
+}
+
+.d-none{
+  display: none;
+}
+
+.container{
+  max-width: 550px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.progress-bar{
+  position: fixed;
+  top: 15px;
+  max-width: 500px;
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.progress-bar-inner{
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-bar__el{
+  width: calc((100% - 8px * 9) / 10 );
+  height: 5px;
+  border-radius: 8px;
+  background: rgba(64, 64, 195, 0.2);
+}
+
+.purple-body .progress-bar__el{
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.progress-bar__el.done{
+  background: #4040c3;
+}
+
+.purple-body .progress-bar__el.done{
+  background: #fff;
+}
+
+.progress-bar-content{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 32px;
+  margin-top: 12px;
+}
+
+.back-tab.d-none{
+  display: none;
+}
+
+.back-tab{
+  display: flex;
+}
+
+.progress-bar-content.start{
+  justify-content: center;
+}
+
+.progress-bar__num,
+.progress-bar__num span{
+  font-weight: 500;
+  font-size: 20px;
+  color: #4040c3;
+}
+
+.purple-body .progress-bar__num,
+.purple-body .progress-bar__num span{
+  color: #fff;
+}
+
+.tab{
+  display: none;
+  padding-top: 88px;
+}
+
+.tab.active{
+  display: block;
+}
+
+.title{
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.banner{
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  border-radius: 13px;
+  padding: 12px;
+}
+
+.banner-silver{
+  flex-direction: column;
+  align-items: center;
+  background: #f2f2fa;
+}
+
+.banner-silver .banner-text{
+  font-weight: 600;
+  font-size: 12px;
+  text-align: center;
+}
+
+.btn{
+  width: 100%;
+  border-radius: 14px;
+  padding: 16px 12px;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tab-btn{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn-silver{
+    background: #f8f8f8;
+}
+
+.btn-blue{
+  background: #4040c3;
+  color: #fff;
+}
+
+.cover{
+  width: 100%;
+  margin: 24px 0 32px;
+}
+
+.cover img{
+  width: 100%;
+}
+
+.banner-pink{
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  width: calc( 100% - 40px);
+  transform: translateX(-50%);
+  background: #f5bebe;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.banner-pink svg{
+  flex-shrink: 0;
+}
+
+.banner-pink span{
+  font-weight: 500;
+  color: #000;
+}
+
+.fix-btn{
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 25px 20px;
+  background: #f8f8f8;
+}
+
+.subtitle{
+  font-weight: 400;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+.subtitle.subtitle--white{
+  color: #fff;
+}
+
+.tab--purple title{
+  font-weight: 700;
+  font-size: 30px;
+  color: #fff;
+}
+
+.title.title--white span{
+  color: #75eb9f;
+}
+
+.purple-body{
+  background: #7b40c3;
+}
+
+.tab--purple .mobile-icon{
+  width: calc(100% + 40px);
+  margin-top: 124px;
+  margin-left: -20px;
+  text-align: center;
+  background: #fff;
+}
+
+.mobile-icon img{
+  position: relative;
+  top: -100px;
+  width: 257px;
+  margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+
