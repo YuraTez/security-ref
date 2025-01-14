@@ -311,6 +311,9 @@ iframe {
   display: flex;
   flex-direction: column;
   gap: 9px;
+  height: 300px;
+  padding-bottom: 30px;
+  overflow: auto;
 }
 
 .checkbox-el label{
@@ -361,4 +364,8 @@ iframe {
 
 .mt-0{
   margin-top: 0;
+}
+
+.tab-pay{
+  padding-top: 30px;
 }
