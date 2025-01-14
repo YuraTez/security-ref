@@ -6,7 +6,7 @@ const nextButtons = document.querySelectorAll('.next-tab .btn');
 const backButton = document.querySelector('.back-tab'); // Кнопка "Назад"
 const progressBar = document.querySelector('.progress-bar-content');
 const progressNum = document.querySelector('.progress-bar__num span'); // Элемент для отображения прогресса
-
+const overlay = document.querySelector('.overlay');
 
 // Переменная для отслеживания текущего таба
 let currentTab = 0;
@@ -14,10 +14,18 @@ let currentTab = 0;
 // Функция для обновления прогресс-бара и отображения текущего таба
 function updateProgress() {
     // Удаляем класс active у всех табов
+    overlay.classList.add('active');
+    tabs.forEach(tab => tab.classList.remove('show'));
     tabs.forEach(tab => tab.classList.remove('active'));
+
 
     // Добавляем класс active к текущему табу
     tabs[currentTab].classList.add('active');
+    overlay.classList.remove('active');
+    setTimeout(function (){
+
+        tabs[currentTab].classList.add('show');
+    }, 300)
 
     if(tabs[currentTab].classList.contains("tab--purple")){
         changeThemeColor('#7b40c3');
