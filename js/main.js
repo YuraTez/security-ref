@@ -27,23 +27,27 @@ function updateProgress() {
         body.classList.remove('purple-body')
     }
 
-    // Обновляем прогресс-бар
-    progressBarElements.forEach((el, index) => {
-        if (index < currentTab + 1) {
-            el.classList.add('done');
+    if (currentTab < 10) {
+        // Обновляем прогресс-бар
+        progressBarElements.forEach((el, index) => {
+            if (index < currentTab + 1) {
+                el.classList.add('done');
+            } else {
+                el.classList.remove('done');
+            }
+        });
+
+        // Обновляем отображение количества пройденных табов
+        progressNum.textContent = currentTab + 1; // +1, так как индексация начинается с 0
+
+        // Управляем видимостью кнопки "Назад"
+        if (currentTab === 0) {
+            backButton.classList.add('d-none'); // Скрываем кнопку на первом табе
         } else {
-            el.classList.remove('done');
+            backButton.classList.remove('d-none'); // Показываем кнопку на остальных табах
         }
-    });
-
-    // Обновляем отображение количества пройденных табов
-    progressNum.textContent = currentTab + 1; // +1, так как индексация начинается с 0
-
-    // Управляем видимостью кнопки "Назад"
-    if (currentTab === 0) {
-        backButton.classList.add('d-none'); // Скрываем кнопку на первом табе
-    } else {
-        backButton.classList.remove('d-none'); // Показываем кнопку на остальных табах
+    }else{
+        $(".progress-bar").hide()
     }
 }
 
@@ -55,8 +59,6 @@ nextButtons.forEach(button => {
             currentTab++;
             updateProgress();
             progressBar.classList.remove('start');
-
-
         }
     });
 });
