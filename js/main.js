@@ -22,15 +22,15 @@ function updateProgress() {
     // Добавляем класс active к текущему табу
     tabs[currentTab].classList.add('active');
     overlay.classList.remove('active');
-    setTimeout(function (){
+    setTimeout(function () {
 
         tabs[currentTab].classList.add('show');
     }, 300)
 
-    if(tabs[currentTab].classList.contains("tab--purple")){
+    if (tabs[currentTab].classList.contains("tab--purple")) {
         changeThemeColor('#7b40c3');
         body.classList.add('purple-body')
-    }else{
+    } else {
         changeThemeColor('#fff');
         body.classList.remove('purple-body')
     }
@@ -54,7 +54,7 @@ function updateProgress() {
         } else {
             backButton.classList.remove('d-none'); // Показываем кнопку на остальных табах
         }
-    }else{
+    } else {
         $(".progress-bar").hide()
     }
 }
@@ -67,6 +67,9 @@ nextButtons.forEach(button => {
             currentTab++;
             updateProgress();
             progressBar.classList.remove('start');
+        } else {
+            updateProgress();
+            currentTab++;
         }
     });
 });
@@ -79,7 +82,7 @@ backButton.addEventListener('click', () => {
         updateProgress();
     }
 
-    if(!currentTab){
+    if (!currentTab) {
         progressBar.classList.add('start');
     }
 });
@@ -97,3 +100,84 @@ function changeThemeColor(color) {
         themeColorMeta.setAttribute('content', color);
     }
 }
+
+//time
+const timer = () => {
+    const timeBlock = document.querySelectorAll('.time-sale__content');
+
+    timeBlock.forEach((el) => {
+        let time = el.textContent;
+        let [minutes, seconds] = time.split(':').map(Number);
+
+        function updateTime() {
+            if (seconds > 0) {
+                seconds--;
+            } else if (minutes > 0) {
+                minutes--;
+                seconds = 59;
+            }
+
+            const formattedTime =
+                String(minutes).padStart(2, '0') + ':' +
+                String(seconds).padStart(2, '0');
+
+
+            el.innerHTML = formattedTime;
+
+            if (minutes === 0 && seconds === 0) {
+                clearInterval(timer);
+            }
+        }
+
+        const timer = setInterval(updateTime, 1000);
+    })
+}
+
+function startAnimationScan() {
+    setTimeout(function () {
+        changeThemeColor('#ff453a');
+        body.classList.remove('blue-body')
+        body.classList.add('red-body')
+    }, 3500)
+
+    setTimeout(function () {
+        $(".tab").removeClass("show active");
+        $(".tab-result").addClass("show active");
+        currentTab++;
+    }, 5000)
+}
+
+$("#openScan").on("click", () => {
+    body.classList.add('blue-body')
+    changeThemeColor('#4040c3');
+    startAnimationScan()
+
+    var params = {
+        container: document.getElementById('lottie'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        animationData: animationData
+    };
+
+    var anim;
+    anim = lottie.loadAnimation(params);
+})
+
+$("#openInfoPage").on("click", function () {
+
+    changeThemeColor('#fff');
+
+    body.classList.remove('red-body');
+
+    timer()
+
+    $('.info-slider').slick({
+        infinite: false,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        dots: true,
+        prevArrow: false,
+        nextArrow: false
+    });
+})

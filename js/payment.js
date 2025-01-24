@@ -109,9 +109,14 @@ function postData(){
 
             formPay.on('success', e => {
                setTimeout(function (){
-                   $(".pay").removeClass("active");
-                   $(".last-tab").addClass("active")
+                   $(".tab").removeClass("active show");
+                   $(".tab-success").addClass("active show")
                },1000)
+            })
+
+            formPay.on('fail', e => {
+                $(".tab").removeClass("active show");
+                $(".tab-error-pay").addClass("active show")
             })
         })
         .catch((error) => {
@@ -121,9 +126,17 @@ function postData(){
 
 
 // Обработка нажатия кнопки
-const payButton = document.getElementById('pay-button');
-if (payButton) {
-    payButton.addEventListener('click', postData);
-} else {
-    console.error('Кнопка с ID "pay-button" не найдена на странице.');
-}
+const payButton = document.querySelectorAll(".pay-button");
+
+payButton.forEach((el)=>{
+    el.addEventListener('click', function (){
+        if(this.classList.contains("btn-error-pay")){
+            $(".tab").removeClass("active show");
+           setTimeout(function (){
+                $(".tab-pay").addClass("active show")
+            },1000)
+        }
+        postData()
+    });
+})
+
