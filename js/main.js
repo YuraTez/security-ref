@@ -148,6 +148,7 @@ const timer = () => {
 
 function startAnimationScan() {
     setTimeout(function () {
+
         changeThemeColor('#ff453a');
         body.classList.remove('blue-body')
         body.classList.add('red-body')
@@ -161,7 +162,10 @@ function startAnimationScan() {
 }
 
 $("#openScan").on("click", () => {
-    body.classList.add('blue-body')
+    $(".logo").addClass("hide");
+    setTimeout(function (){
+        body.classList.add('blue-body')
+    },300)
     changeThemeColor('#4040c3');
     startAnimationScan()
 
