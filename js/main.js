@@ -14,49 +14,52 @@ let currentTab = 0;
 // Функция для обновления прогресс-бара и отображения текущего таба
 function updateProgress() {
     // Удаляем класс active у всех табов
-    overlay.classList.add('active');
-    tabs.forEach(tab => tab.classList.remove('show'));
-    tabs.forEach(tab => tab.classList.remove('active'));
+
+    setTimeout(function (){
+        tabs.forEach(tab => tab.classList.remove('show'));
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        // Добавляем класс active к текущему табу
+        tabs[currentTab].classList.add('active');
 
 
-    // Добавляем класс active к текущему табу
-    tabs[currentTab].classList.add('active');
-    overlay.classList.remove('active');
+    },300)
+
     setTimeout(function () {
-
         tabs[currentTab].classList.add('show');
-    }, 300)
 
-    if (tabs[currentTab].classList.contains("tab--purple")) {
-        changeThemeColor('#7b40c3');
-        body.classList.add('purple-body')
-    } else {
-        changeThemeColor('#fff');
-        body.classList.remove('purple-body')
-    }
-
-    if (currentTab < 10) {
-        // Обновляем прогресс-бар
-        progressBarElements.forEach((el, index) => {
-            if (index < currentTab + 1) {
-                el.classList.add('done');
-            } else {
-                el.classList.remove('done');
-            }
-        });
-
-        // Обновляем отображение количества пройденных табов
-        progressNum.textContent = currentTab + 1; // +1, так как индексация начинается с 0
-
-        // Управляем видимостью кнопки "Назад"
-        if (currentTab === 0) {
-            backButton.classList.add('d-none'); // Скрываем кнопку на первом табе
+        if (tabs[currentTab].classList.contains("tab--purple")) {
+            changeThemeColor('#7b40c3');
+            body.classList.add('purple-body')
         } else {
-            backButton.classList.remove('d-none'); // Показываем кнопку на остальных табах
+            changeThemeColor('#fff');
+            body.classList.remove('purple-body')
         }
-    } else {
-        $(".progress-bar").hide()
-    }
+
+        if (currentTab < 10) {
+            // Обновляем прогресс-бар
+            progressBarElements.forEach((el, index) => {
+                if (index < currentTab + 1) {
+                    el.classList.add('done');
+                } else {
+                    el.classList.remove('done');
+                }
+            });
+
+            // Обновляем отображение количества пройденных табов
+            progressNum.textContent = currentTab + 1; // +1, так как индексация начинается с 0
+
+            // Управляем видимостью кнопки "Назад"
+            if (currentTab === 0) {
+                backButton.classList.add('d-none'); // Скрываем кнопку на первом табе
+            } else {
+                backButton.classList.remove('d-none'); // Показываем кнопку на остальных табах
+            }
+        } else {
+            $(".progress-bar").hide()
+        }
+    }, 500)
+
 }
 
 // Обработчик события для кнопок "next"
@@ -66,6 +69,7 @@ nextButtons.forEach(button => {
         if (currentTab < tabs.length - 1) {
             currentTab++;
             updateProgress();
+            backButton.classList.remove('d-none');
             progressBar.classList.remove('start');
         } else {
             updateProgress();
@@ -83,6 +87,7 @@ backButton.addEventListener('click', () => {
     }
 
     if (!currentTab) {
+        backButton.classList.add('d-none');
         progressBar.classList.add('start');
     }
 });
@@ -100,6 +105,14 @@ function changeThemeColor(color) {
         themeColorMeta.setAttribute('content', color);
     }
 }
+
+$(".btn").on("click" , function (){
+    let btnList = $(this).parent().find(".btn");
+    $.each(btnList, function(index, el) {
+        $(el).removeClass('active');
+    });
+    $(this).addClass("active")
+})
 
 //time
 const timer = () => {
