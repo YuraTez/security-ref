@@ -13,7 +13,14 @@ let currentTab = 0;
 
 // Функция для обновления прогресс-бара и отображения текущего таба
 function updateProgress() {
-    // Удаляем класс active у всех табов
+
+    if(currentTab - 1 > 0 && tabs[currentTab - 1].getAttribute("data-tab") === "email"){
+
+        if(!validEmail($(".input-email"))){
+            currentTab--
+            return
+        }
+    }
 
     setTimeout(function (){
         tabs.forEach(tab => tab.classList.remove('show'));
@@ -161,24 +168,44 @@ function startAnimationScan() {
     }, 5000)
 }
 
+function validEmail (input){
+    let emailInput = input.val();
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Регулярное выражение для валидации email
+
+    if (!emailPattern.test(emailInput)) {
+        return false
+    } else {
+       return true
+    }
+}
+
 $("#openScan").on("click", () => {
-    $(".logo").addClass("hide");
-    setTimeout(function (){
-        body.classList.add('blue-body')
-    },300)
-    changeThemeColor('#4040c3');
-    startAnimationScan()
 
-    var params = {
-        container: document.getElementById('lottie'),
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        animationData: animationData
-    };
+    if(validEmail($(".input-email"))){
 
-    var anim;
-    anim = lottie.loadAnimation(params);
+        $(".logo").addClass("hide");
+        setTimeout(function (){
+            body.classList.add('blue-body')
+        },300)
+        changeThemeColor('#4040c3');
+        startAnimationScan()
+
+        var params = {
+            container: document.getElementById('lottie'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            animationData: animationData
+        };
+
+        var anim;
+        anim = lottie.loadAnimation(params);
+    }else{
+        $('#error').addClass("show");
+        setTimeout(()=>{
+            $('#error').removeClass("show");
+        },1000)
+    }
 })
 
 $("#openInfoPage").on("click", function () {

@@ -239,6 +239,10 @@ textarea {
   z-index: 2;
 }
 
+.fix-btn .tab-btn{
+  margin: 0;
+}
+
 .subtitle {
   font-weight: 400;
   font-size: 14px;
@@ -374,7 +378,7 @@ iframe {
   display: flex;
   flex-direction: column;
   gap: 9px;
-  height: 300px;
+  height: 36vh;
   padding-bottom: 30px;
   overflow: auto;
 }
@@ -432,7 +436,7 @@ iframe {
 .tab-pay {
   height: 100vh;
   overflow: auto;
-  padding: 30px 0 50px;
+  padding: 30px 0 100px;
 }
 
 .tab-email {
@@ -454,7 +458,27 @@ iframe {
 }
 
 .email-person {
+  position: relative;
   margin: 32px 0 12px;
+}
+
+#error{
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff;
+  background: #f10505;
+  text-align: center;
+  transition: .3s;
+  opacity: 0;
+}
+
+#error.show{
+  opacity: 1;
 }
 
 .input-email {
@@ -631,7 +655,7 @@ iframe {
   height: 100vh;
   width: 100%;
   margin-left: -20px;
-  padding: 0 20px;
+  padding: 100px 20px 0;
   z-index: -1;
 }
 
@@ -1172,8 +1196,9 @@ iframe {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 168px;
-  height: 170px;
+  margin-top: 175px;
+  height: 180px;
+  padding-bottom: 100px;
   overflow: scroll;
 }
 
@@ -1315,8 +1340,47 @@ iframe {
 }
 
 
+@media (max-width: 375px) {
+  .tab-btn-scroll.tab-btn{
+    max-height: 200px;
+    padding-bottom: 50px;
+    overflow: auto;
+  }
 
+  .banner-pink {
+    position: fixed;
+    bottom: 10px;
+  }
 
+  .tab-email {
+    padding-top: 10px;
+  }
+
+  .email-person {
+    margin: 20px 0 12px;
+  }
+
+  .tab-email .subtitle{
+    margin-bottom: 20px;
+  }
+
+  .result-title__text{
+    font-size: 28px;
+  }
+
+  .lottie-inner{
+    top: 125px;
+  }
+
+}
+
+.tab-btn::-webkit-scrollbar,
+.checkbox-list::-webkit-scrollbar,
+.check-result::-webkit-scrollbar,
+.security-info::-webkit-scrollbar,
+.tab-pay::-webkit-scrollbar{
+  width: 0;
+}
 
 
 
