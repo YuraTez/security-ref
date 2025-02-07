@@ -1198,7 +1198,7 @@ iframe {
   gap: 8px;
   margin-top: 175px;
   height: 180px;
-  padding-bottom: 100px;
+  padding-bottom: 40px;
   overflow: scroll;
 }
 
@@ -1372,16 +1372,36 @@ iframe {
     top: 125px;
   }
 
+  .tab-email{
+    height: 72vh;
+    overflow: auto;
+    padding-bottom: 30px;
+  }
+
 }
 
 .tab-btn::-webkit-scrollbar,
 .checkbox-list::-webkit-scrollbar,
 .check-result::-webkit-scrollbar,
 .security-info::-webkit-scrollbar,
+.tab-email::-webkit-scrollbar,
 .tab-pay::-webkit-scrollbar{
   width: 0;
+  height: 0;
+  background: transparent;
 }
 
+
+.tab-btn::-webkit-scrollbar-thumb,
+.checkbox-list::-webkit-scrollbar-thumb,
+.check-result::-webkit-scrollbar-thumb,
+.security-info::-webkit-scrollbar-thumb,
+.tab-email::-webkit-scrollbar-thumb,
+.tab-pay::-webkit-scrollbar-thumb{
+  width: 0;
+  height: 0;
+  background: transparent;
+}
 
 
 
