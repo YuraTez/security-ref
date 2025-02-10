@@ -37,7 +37,7 @@ function generateRandomString(length) {
 function postData(){
     const data = {
         "order_id": generateUUIDString(),
-        "product_id" : "0598d54b-7240-4c67-913a-ab188240c14a",
+        "product_id" : "2cacd413-d59f-4cc3-986d-83fe3664fcaa",
         "order_description": "Premium package",
         "customer_account_id" : generateRandomString(10),
         "product_price_id": "625915e8-9830-45b8-b75e-5953fd589c9e",
@@ -74,12 +74,17 @@ function postData(){
                     hideCvvNumbers: true,
                     headerText: 'Enter your debit or credit card details (from merchant)',
                     titleText: 'Join over 500000 users, who stays protected online',
-                    formTypeClass: 'default',
+                    formTypeClass: 'flat',
                     googleFontLink: 'https://fonts.cdnfonts.com/css/sf-pro-display?styles=98774,98773',
                     autoFocus: false,
                     width: "100%",
                     responsive: true,
-                    applePayButtonParams: true
+                    applePayButtonParams: true,
+                    paypalButtonParams: { // Добавьте параметры для кнопки PayPal
+                        enabled: true, // Включите кнопку PayPal
+                        buttonType: 'default', // Укажите тип кнопки (может быть 'flat' или другой)
+                        buttonText: 'Pay with PayPal' // Текст на кнопке
+                    }
                 },
 
                 styles: {
