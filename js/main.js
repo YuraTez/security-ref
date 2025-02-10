@@ -13,13 +13,19 @@ let currentTab = 0;
 
 // Функция для обновления прогресс-бара и отображения текущего таба
 function updateProgress() {
-
+    window.scrollTo(0, 0);
     if(currentTab - 1 > 0 && tabs[currentTab - 1].getAttribute("data-tab") === "email"){
 
         if(!validEmail($(".input-email"))){
             currentTab--
             return
         }
+    }
+
+    if(currentTab  > 0 && tabs[currentTab].getAttribute("data-tab") === "email"){
+       setTimeout(()=>{
+           $(".logo").addClass("hide");
+       },300)
     }
 
     setTimeout(function (){
@@ -107,6 +113,11 @@ backButton.addEventListener('click', () => {
         progressBar.classList.add('start');
     }
 });
+
+$(".tab-pay .back-tab").on("click" , function (){
+    currentTab--;
+    updateProgress();
+})
 
 // Инициализация
 updateProgress();
@@ -199,16 +210,14 @@ $("#openScan").on("click", () => {
         changeThemeColor('#4040c3');
         startAnimationScan()
 
-        var params = {
+        var statistics = lottie.loadAnimation({
             container: document.getElementById('lottie'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            animationData: animationData
-        };
+            renderer: 'svg', // тип рендерера
+            loop: true, // зацикливание
+            autoplay: true, // автозапуск
+            path: 'animation/SecurityApp_Sсanner.json'
+        });
 
-        var anim;
-        anim = lottie.loadAnimation(params);
     }else{
         $('#error').addClass("show");
         setTimeout(()=>{
@@ -226,12 +235,14 @@ $("#openInfoPage").on("click", function () {
     timer()
 
     $('.info-slider').slick({
-        infinite: false,
+        infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
         dots: true,
         prevArrow: false,
-        nextArrow: false
+        nextArrow: false,
+        autoplay: true,
+        autoplaySpeed: 2000,
     });
 })
 
@@ -239,4 +250,20 @@ $('.input-email').on('keydown', function(event) {
     if (event.key === 'Enter') {
         $(this).blur();
     }
+});
+
+var statistics = lottie.loadAnimation({
+    container: document.getElementById('statistics'),
+    renderer: 'svg', // тип рендерера
+    loop: true, // зацикливание
+    autoplay: true, // автозапуск
+    path: 'animation/SecurityApp_Statistics.json'
+});
+
+var solution = lottie.loadAnimation({
+    container: document.getElementById('solution'),
+    renderer: 'svg', // тип рендерера
+    loop: true, // зацикливание
+    autoplay: true, // автозапуск
+    path: 'animation/SecurityApp_Solution.json'
 });
