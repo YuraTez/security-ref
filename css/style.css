@@ -1285,7 +1285,7 @@ iframe {
   flex-direction: column;
   gap: 16px;
   height: 50vh;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
   overflow: auto;
 }
 
