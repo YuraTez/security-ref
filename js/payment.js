@@ -37,7 +37,7 @@ function generateRandomString(length) {
 function postData(){
     const data = {
         "order_id": generateUUIDString(),
-        "product_id" : "2cacd413-d59f-4cc3-986d-83fe3664fcaa",
+        "product_id" : "f43d79ca-85d9-4e73-8b37-284754ad0125",
         "order_description": "Premium package",
         "customer_account_id" : generateRandomString(10),
         "product_price_id": "625915e8-9830-45b8-b75e-5953fd589c9e",
