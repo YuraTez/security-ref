@@ -80,11 +80,6 @@ function postData(){
                     width: "100%",
                     responsive: true,
                     applePayButtonParams: true,
-                    paypalButtonParams: { // Добавьте параметры для кнопки PayPal
-                        enabled: true, // Включите кнопку PayPal
-                        buttonType: 'default', // Укажите тип кнопки (может быть 'flat' или другой)
-                        buttonText: 'Pay with PayPal' // Текст на кнопке
-                    }
                 },
 
                 styles: {
