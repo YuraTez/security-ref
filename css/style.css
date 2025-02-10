@@ -117,7 +117,7 @@ textarea {
 
 .tab {
   display: none;
-  padding-top: 88px;
+  padding-top: 70px;
   opacity: 0;
   transition: 0.5s;
 }
@@ -140,6 +140,13 @@ textarea {
 .title--white{
   color: #fff;
 }
+
+.tab--purple .subtitle.subtitle--white,
+.tab--purple .title--white{
+  text-align: left;
+}
+
+
 
 .banner {
   display: flex;
@@ -375,6 +382,7 @@ iframe {
 }
 
 .checkbox-list {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 9px;
@@ -1403,5 +1411,25 @@ iframe {
   background: transparent;
 }
 
+.error-checkbox{
+  position: fixed;
+  width: 100%;
+  top: -30px;
+  left: 0;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 0 0 5px 5px;
+  color: #fff;
+  background: #f10505;
+  text-align: center;
+  transition: .3s;
+  opacity: 0;
+  z-index: 2;
+}
+
+.error-checkbox.show{
+  opacity: 1;
+  top: 0;
+}
 
 

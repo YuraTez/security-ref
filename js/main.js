@@ -74,6 +74,15 @@ nextButtons.forEach(button => {
     button.addEventListener('click', () => {
         // Проверяем, не достигли ли мы последнего таба
         if (currentTab < tabs.length - 1) {
+            if(currentTab > 0 && tabs[currentTab].getAttribute("data-tab") === "6"){
+                if(!$(".checkbox-list__input:checked").length){
+                    $('.error-checkbox').addClass("show");
+                    setTimeout(()=>{
+                        $('.error-checkbox').removeClass("show");
+                    },2000)
+                    return
+                }
+            }
             currentTab++;
             updateProgress();
             backButton.classList.remove('d-none');
@@ -225,3 +234,9 @@ $("#openInfoPage").on("click", function () {
         nextArrow: false
     });
 })
+
+$('.input-email').on('keydown', function(event) {
+    if (event.key === 'Enter') {
+        $(this).blur();
+    }
+});
