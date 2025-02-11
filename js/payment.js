@@ -41,7 +41,7 @@ function postData(){
         "order_description": "Premium package",
         "customer_account_id" : generateRandomString(10),
         "product_price_id": "625915e8-9830-45b8-b75e-5953fd589c9e",
-        "customer_email": "test@solidgate.com",
+        "customer_email": $(".input-email").val(),
     };
 
     fetch(url, {

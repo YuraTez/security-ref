@@ -188,6 +188,43 @@ function startAnimationScan() {
     }, 5000)
 }
 
+function createUser(){
+    const link = new URL(window.location.href);
+    const clickId = link.searchParams.get('click_id');
+    const url = "https://rocknlabs.com/api/user/create";
+    const data = {
+        "email": $(".input-email").val(),
+        "click_id": clickId,
+        "first_product_id": "0598d54b-7240-4c67-913a-ab188240c14a",
+    }
+
+    async function sendPostRequest() {
+        try {
+            const response = await fetch(url, {
+                method: 'POST', // Метод запроса
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            // Проверяем, успешен ли ответ
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+
+            // Получаем данные из ответа
+            const responseData = await response.json();
+            console.log('Success:', responseData);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    sendPostRequest()
+
+}
+
 function validEmail (input){
     let emailInput = input.val();
     let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Регулярное выражение для валидации email
@@ -217,6 +254,8 @@ $("#openScan").on("click", () => {
             autoplay: true, // автозапуск
             path: 'animation/SecurityApp_Sсanner.json'
         });
+
+        createUser()
 
     }else{
         $('#error').addClass("show");

@@ -450,7 +450,7 @@ iframe {
 }
 
 .tab-pay {
-  height: 100vh;
+  height: 100dvh;
   overflow: auto;
   padding: 30px 0 100px;
 }
@@ -1119,7 +1119,8 @@ iframe {
 }
 
 .footer {
-  margin: 72px 0 92px;
+  margin: 72px 0 0;
+  padding-bottom: 92px;
 }
 
 .footer-text,
