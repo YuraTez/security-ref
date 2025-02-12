@@ -75,9 +75,41 @@ function updateProgress() {
 
 }
 
+
+const objEventAmplitude = {
+    1: "settlement_screen_view",
+    2: "sms_screen_view",
+    3: "interlayer1_view",
+    4: "card1_view",
+    5: "card2_view",
+    6: "card3_select_view",
+    7: "interlayer2_view",
+    8: "password1_view",
+    9: "password2_view",
+    10: "password3_view",
+    "email": "email_view",
+    "mailFocus": "email_field_click",
+    "checkboxOn": "alert_on",
+    "checkboxOff": "alert_off",
+    "emailValid" : "is_lead",
+    "emailError" : "email_error",
+    "scan": "result_view",
+    "result": "paywall_view",
+    "protectClick" : "protect_click",
+    "buy_click" : "buy_click",
+    "paywall_end": "paywall_end"
+}
+
+
+function logView(data) {
+    amplitude.logEvent(data);
+}
+
+
 // Обработчик события для кнопок "next"
 nextButtons.forEach(button => {
     button.addEventListener('click', () => {
+
         // Проверяем, не достигли ли мы последнего таба
         if (currentTab < tabs.length - 1) {
             if(currentTab > 0 && tabs[currentTab].getAttribute("data-tab") === "6"){
@@ -97,8 +129,32 @@ nextButtons.forEach(button => {
             updateProgress();
             currentTab++;
         }
+
+        let dataCurrentTab = tabs[currentTab].getAttribute("data-tab")
+
+        if (dataCurrentTab === "email") {
+            if (validEmail($(".input-email"))) {
+                logView(objEventAmplitude[dataCurrentTab])
+            }
+        }else if(objEventAmplitude[dataCurrentTab] !== undefined){
+            logView(objEventAmplitude[dataCurrentTab])
+        }
+
     });
 });
+
+$(".input-email").on("focus" , ()=>{
+    logView(objEventAmplitude["mailFocus"])
+})
+
+$("#securityAlert").on("change" , function (){
+    if(this.checked){
+        logView(objEventAmplitude["checkboxOn"])
+    }else{
+        logView(objEventAmplitude["checkboxOff"])
+    }
+})
+
 
 // Обработчик события для кнопки "Назад"
 backButton.addEventListener('click', () => {
@@ -257,13 +313,45 @@ $("#openScan").on("click", () => {
 
         createUser()
 
+        logView(objEventAmplitude["emailValid"])
+
     }else{
         $('#error').addClass("show");
         setTimeout(()=>{
             $('#error').removeClass("show");
         },1000)
+
+        logView(objEventAmplitude["emailError"])
     }
 })
+
+
+$(".btn--time").on("click" , ()=>{
+    logView(objEventAmplitude["protectClick"])
+})
+
+$("#payProtect").on("click" , ()=>{
+    logView(objEventAmplitude["buy_click"])
+})
+
+const tabInfo = document.querySelector('.tab-info');
+
+// Определите функцию для обработки события прокрутки
+function handleScroll() {
+    const scrollTop = tabInfo.scrollTop;
+    const clientHeight = tabInfo.clientHeight;
+    const scrollHeight = tabInfo.scrollHeight;
+
+    if (scrollTop + clientHeight >= scrollHeight - 250) {
+        logView(objEventAmplitude["paywall_end"]);
+
+        // Удаление обработчика события
+        tabInfo.removeEventListener('scroll', handleScroll);
+    }
+}
+
+// Добавление обработчика события
+tabInfo.addEventListener('scroll', handleScroll);
 
 $("#openInfoPage").on("click", function () {
 
