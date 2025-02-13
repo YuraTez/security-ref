@@ -46,6 +46,7 @@ function postData(){
         "product_price_id": "625915e8-9830-45b8-b75e-5953fd589c9e",
         "customer_email": $(".input-email").val(),
     };
+    amplitude.logEvent('frame_loading_started');
 
     fetch(url, {
         method: 'POST',
@@ -110,16 +111,63 @@ function postData(){
 
             const  formPay = PaymentFormSdk.init(initData);
 
+            formPay.on('mounted', e => {
+                amplitude.logEvent('frame_loading_finished');
+            })
+
+            let cardNumber = true
+            let cardCvv = true
+            let cardExpiryDate = true
+
+            formPay.on('interaction', e => {
+                const data = e.data // InteractionMessage
+
+                if(data.target.type === "button"){
+                    amplitude.logEvent('purchase_intent');
+
+                    const fieldValues = Object.values(data.cardForm.fields);
+                    const hasInvalid = fieldValues.some(field => !field.isValid);
+
+                    if (hasInvalid){
+                        amplitude.logEvent('purchase_intent_fail');
+                    }
+                }
+
+                Object.keys(data.cardForm.fields).forEach(key => {
+                    const field = data.cardForm.fields[key];
+
+                    if(key === "cardNumber" && field.isValid && cardNumber){
+
+                        amplitude.logEvent('card_field_fill');
+                       return  cardNumber = false
+                    }
+
+                    if(key === "cardExpiryDate" && cardExpiryDate){
+                        amplitude.logEvent('expire_fill');
+                        return  cardExpiryDate = false
+                    }
+                    
+                    if(key === "cardCvv" && cardCvv){
+                        amplitude.logEvent('cvv_fill');
+                        return  cardCvv = false
+                    }
+                    
+                });
+            })
+
             formPay.on('success', e => {
                setTimeout(function (){
                    $(".tab").removeClass("active show");
                    $(".tab-success").addClass("active show")
+                   amplitude.logEvent('purchase_success');
+                   amplitude.logEvent('success_view');
                },1000)
             })
 
             formPay.on('fail', e => {
                 $(".tab").removeClass("active show");
                 $(".tab-error-pay").addClass("active show")
+                amplitude.logEvent('purchase_fail');
             })
         })
         .catch((error) => {

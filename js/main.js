@@ -94,10 +94,12 @@ const objEventAmplitude = {
     "emailValid" : "is_lead",
     "emailError" : "email_error",
     "scan": "result_view",
-    "result": "paywall_view",
+    "info": "paywall_view",
     "protectClick" : "protect_click",
     "buy_click" : "buy_click",
-    "paywall_end": "paywall_end"
+    "paywall_end": "paywall_end",
+    "pay": "checkout_view",
+    "backPay" : "checkout_close"
 }
 
 
@@ -332,6 +334,14 @@ $(".btn--time").on("click" , ()=>{
 
 $("#payProtect").on("click" , ()=>{
     logView(objEventAmplitude["buy_click"])
+})
+
+$("#payProtect").on("click" , ()=>{
+    logView("app_download")
+})
+
+$("#backPay").on("click" , ()=>{
+    logView(objEventAmplitude["backPay"])
 })
 
 const tabInfo = document.querySelector('.tab-info');
