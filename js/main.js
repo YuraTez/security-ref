@@ -252,7 +252,7 @@ function createUser(){
     const url = "https://rocknlabs.com/api/user/create";
     const data = {
         "email": $(".input-email").val(),
-        "click_id": clickId,
+        "click_id": generateUUID, //clickId,
         "first_product_id": "0598d54b-7240-4c67-913a-ab188240c14a",
     }
 

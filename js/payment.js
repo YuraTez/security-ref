@@ -42,7 +42,7 @@ function postData(){
         "order_id": generateUUIDString(),
         "product_id" : "0598d54b-7240-4c67-913a-ab188240c14a",
         "order_description": "Premium package",
-        "customer_account_id" : clickId,
+        "customer_account_id" : generateUUID, //clickId,
         "product_price_id": "625915e8-9830-45b8-b75e-5953fd589c9e",
         "customer_email": $(".input-email").val(),
     };
