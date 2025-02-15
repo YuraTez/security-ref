@@ -46,6 +46,5 @@
     }(window, document)
 }();
 
-/*amplitude.init('33661e4844461073542a818bfdfab02e');*/
-amplitude.logEvent('settlement_screen_view');
+amplitude.init('33661e4844461073542a818bfdfab02e');
 

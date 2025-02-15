@@ -37,12 +37,12 @@ function generateRandomString(length) {
 
 function postData(){
     const link = new URL(window.location.href);
-    const clickId = link.searchParams.get('click_id');
+    const clickId = link.searchParams.get('click_id') !== null ? link.searchParams.get('click_id') : generateUUID(10);
     const data = {
         "order_id": generateUUIDString(),
         "product_id" : "0598d54b-7240-4c67-913a-ab188240c14a",
         "order_description": "Premium package",
-        "customer_account_id" : generateUUID, //clickId,
+        "customer_account_id" : clickId ,
         "product_price_id": "625915e8-9830-45b8-b75e-5953fd589c9e",
         "customer_email": $(".input-email").val(),
     };
@@ -124,7 +124,6 @@ function postData(){
 
                 if(data.target.type === "button"){
                     amplitude.logEvent('purchase_intent');
-
                     const fieldValues = Object.values(data.cardForm.fields);
                     const hasInvalid = fieldValues.some(field => !field.isValid);
 
@@ -137,17 +136,18 @@ function postData(){
                     const field = data.cardForm.fields[key];
 
                     if(key === "cardNumber" && field.isValid && cardNumber){
-
                         amplitude.logEvent('card_field_fill');
                        return  cardNumber = false
                     }
 
-                    if(key === "cardExpiryDate" && cardExpiryDate){
+                    if(key === "cardExpiryDate" && field.isValid && cardExpiryDate){
+                        console.log(data)
                         amplitude.logEvent('expire_fill');
                         return  cardExpiryDate = false
                     }
                     
-                    if(key === "cardCvv" && cardCvv){
+                    if(key === "cardCvv" && field.isValid && cardCvv){
+                        console.log(data)
                         amplitude.logEvent('cvv_fill');
                         return  cardCvv = false
                     }

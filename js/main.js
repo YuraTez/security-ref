@@ -1,3 +1,7 @@
+setTimeout(()=>{
+    $(".risk-line__indicator").addClass("active");
+},1000)
+
 // Получаем все элементы табов и кнопки
 const body = document.querySelector("body");
 const tabs = document.querySelectorAll('.tab');
@@ -10,6 +14,62 @@ const overlay = document.querySelector('.overlay');
 
 // Переменная для отслеживания текущего таба
 let currentTab = 0;
+
+$(".tab-start").on("click" , ()=>{
+    $(".progress-bar").removeClass("hide");
+    setTimeout(function (){
+        $(".tab-start-page").removeClass("active show")
+
+    },300)
+
+    setTimeout(function (){
+        $(".tab[data-tab='1']").addClass("active show")
+    },300)
+
+    logView("settlement_screen_view")
+    window.scrollTo(0, 0);
+    currentTabProgressBar ()
+    currentTab++
+
+})
+
+function currentTabProgressBar (){
+    setTimeout(function () {
+        tabs[currentTab].classList.add('show');
+
+        if (tabs[currentTab].classList.contains("tab--purple")) {
+            changeThemeColor('#7b40c3');
+            body.classList.add('purple-body')
+        } else {
+            changeThemeColor('#fff');
+            body.classList.remove('purple-body')
+        }
+
+        if (currentTab < 11) {
+            // Обновляем прогресс-бар
+            progressBarElements.forEach((el, index) => {
+                if (index < currentTab ) {
+                    el.classList.add('done');
+                } else {
+                    el.classList.remove('done');
+                }
+            });
+
+            // Обновляем отображение количества пройденных табов
+            progressNum.textContent = currentTab ;
+
+            // Управляем видимостью кнопки "Назад"
+            if (currentTab === 1) {
+                progressBar.classList.add('start');
+                backButton.classList.add('d-none'); // Скрываем кнопку на первом табе
+            } else {
+                backButton.classList.remove('d-none'); // Показываем кнопку на остальных табах
+            }
+        } else {
+            $(".progress-bar").hide()
+        }
+    }, 500)
+}
 
 // Функция для обновления прогресс-бара и отображения текущего таба
 function updateProgress() {
@@ -38,40 +98,7 @@ function updateProgress() {
 
     },300)
 
-    setTimeout(function () {
-        tabs[currentTab].classList.add('show');
-
-        if (tabs[currentTab].classList.contains("tab--purple")) {
-            changeThemeColor('#7b40c3');
-            body.classList.add('purple-body')
-        } else {
-            changeThemeColor('#fff');
-            body.classList.remove('purple-body')
-        }
-
-        if (currentTab < 10) {
-            // Обновляем прогресс-бар
-            progressBarElements.forEach((el, index) => {
-                if (index < currentTab + 1) {
-                    el.classList.add('done');
-                } else {
-                    el.classList.remove('done');
-                }
-            });
-
-            // Обновляем отображение количества пройденных табов
-            progressNum.textContent = currentTab + 1; // +1, так как индексация начинается с 0
-
-            // Управляем видимостью кнопки "Назад"
-            if (currentTab === 0) {
-                backButton.classList.add('d-none'); // Скрываем кнопку на первом табе
-            } else {
-                backButton.classList.remove('d-none'); // Показываем кнопку на остальных табах
-            }
-        } else {
-            $(".progress-bar").hide()
-        }
-    }, 500)
+    currentTabProgressBar ()
 
 }
 
@@ -111,7 +138,6 @@ function logView(data) {
 // Обработчик события для кнопок "next"
 nextButtons.forEach(button => {
     button.addEventListener('click', () => {
-
         // Проверяем, не достигли ли мы последнего таба
         if (currentTab < tabs.length - 1) {
             if(currentTab > 0 && tabs[currentTab].getAttribute("data-tab") === "6"){
@@ -131,7 +157,6 @@ nextButtons.forEach(button => {
             updateProgress();
             currentTab++;
         }
-
         let dataCurrentTab = tabs[currentTab].getAttribute("data-tab")
 
         if (dataCurrentTab === "email") {
@@ -241,18 +266,24 @@ function startAnimationScan() {
 
     setTimeout(function () {
         $(".tab").removeClass("show active");
+
+        setTimeout(()=>{
+          $(".tab-scan").removeClass("z-index")
+          $(".tab-scan").addClass("d-none")
+        },300)
+
         $(".tab-result").addClass("show active");
         currentTab++;
-    }, 5000)
+    }, 6000)
 }
 
 function createUser(){
     const link = new URL(window.location.href);
-    const clickId = link.searchParams.get('click_id');
+    const clickId = link.searchParams.get('click_id') !== null ? link.searchParams.get('click_id') : generateUUID(10);
     const url = "https://rocknlabs.com/api/user/create";
     const data = {
         "email": $(".input-email").val(),
-        "click_id": generateUUID, //clickId,
+        "click_id": clickId,
         "first_product_id": "0598d54b-7240-4c67-913a-ab188240c14a",
     }
 
@@ -304,7 +335,7 @@ $("#openScan").on("click", () => {
         },300)
         changeThemeColor('#4040c3');
         startAnimationScan()
-
+        $(".tab-scan").addClass("z-index")
         var statistics = lottie.loadAnimation({
             container: document.getElementById('lottie'),
             renderer: 'svg', // тип рендерера
@@ -336,7 +367,7 @@ $("#payProtect").on("click" , ()=>{
     logView(objEventAmplitude["buy_click"])
 })
 
-$("#payProtect").on("click" , ()=>{
+$("#appDownload").on("click" , ()=>{
     logView("app_download")
 })
 
