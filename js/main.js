@@ -453,7 +453,7 @@ var solution = lottie.loadAnimation({
 
 
 function handleScrollToTop() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, document.body.scrollHeight);
 }
 
 // Проверка наличия визуального вьюпорта для обработки изменения размера
@@ -488,5 +488,4 @@ if (visualViewport) {
 }
 
 // Добавление обработчика события для прокрутки вверх при завершении касания
-/*
-document.addEventListener("touchend", handleScrollToTop);*/
+document.addEventListener("touchend", handleScrollToTop);
