@@ -474,7 +474,7 @@ if (visualViewport) {
 
     visualViewport.addEventListener("resize", function(event) {
         var target = event.target; // Получаем целевой элемент события
-        var page = document.querySelector('.page'); // Замените на ваш селектор
+        var page = document.querySelector('body'); // Замените на ваш селектор
 
         if (viewportWidth !== target.width) {
             viewportWidth = window.innerWidth;
