@@ -451,9 +451,8 @@ var solution = lottie.loadAnimation({
     path: 'animation/SecurityApp_Solution.json'
 });
 
-/*
 function handleScrollToTop() {
-    window.scrollTo(0, document.body.scrollHeight);
+    window.scrollTo(0, 0);
 }
 
 // Проверка наличия визуального вьюпорта для обработки изменения размера
@@ -488,10 +487,4 @@ if (visualViewport) {
 }
 
 // Добавление обработчика события для прокрутки вверх при завершении касания
-document.addEventListener("touchend", handleScrollToTop);*/
-
-function adjustHeight() {
-    document.body.style.height = `${window.innerHeight}px`;
-}
-window.addEventListener('resize', adjustHeight);
-adjustHeight(); // Call it on page load
+document.addEventListener("touchend", handleScrollToTop);
