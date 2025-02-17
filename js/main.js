@@ -452,21 +452,43 @@ var solution = lottie.loadAnimation({
 });
 
 
-function adjustHeight() {
-    const vh = window.innerHeight * 0.01; // 1% от высоты окна
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+function handleScrollToTop() {
+    window.scrollTo(0, 0);
 }
 
-window.addEventListener('resize', adjustHeight);
-window.addEventListener('load', adjustHeight);
 
 
-const emailInput = document.querySelector('.input-email');
 
-emailInput.addEventListener('focus', () => {
-    document.body.style.paddingBottom = '0'; // Установите нужный отступ
-});
+// Проверка наличия визуального вьюпорта для обработки изменения размера
+var visualViewport = window.visualViewport;
+var offset = 0;
 
-emailInput.addEventListener('blur', () => {
-    document.body.style.paddingBottom = '0'; // Верните к исходному значению
-});
+if (visualViewport) {
+    var viewportWidth = window.innerWidth;
+    var viewportHeight = window.innerHeight;
+
+    visualViewport.addEventListener("resize", function(event) {
+        var target = event.target;
+        var page = document.querySelector('body');
+
+        if (viewportWidth !== target.width) {
+            viewportWidth = window.innerWidth;
+            viewportHeight = window.innerHeight;
+        }
+
+        if (viewportHeight - target.height > 150) {
+            handleScrollToTop();
+            var adjustment = viewportHeight - target.height - offset;
+            page.style.bottom = adjustment + "px";
+        } else if (
+            viewportHeight === target.height ||
+            viewportHeight - target.height <= 150
+        ) {
+            offset = viewportHeight - target.height;
+            page.style.bottom = "0px";
+        }
+    });
+}
+
+// Добавление обработчика события для прокрутки вверх при завершении касания
+document.addEventListener("touchend", handleScrollToTop);
