@@ -459,6 +459,11 @@ function handleScrollToTop() {
 
 
 
+// Функция для прокрутки страницы вверх
+function handleScrollToTop() {
+    window.scrollTo(0, 0);
+}
+
 // Проверка наличия визуального вьюпорта для обработки изменения размера
 var visualViewport = window.visualViewport;
 var offset = 0;
@@ -468,24 +473,27 @@ if (visualViewport) {
     var viewportHeight = window.innerHeight;
 
     visualViewport.addEventListener("resize", function(event) {
-        var target = event.target;
-        var page = document.querySelector('body');
+        var target = event.target; // Получаем целевой элемент события
+        var page = document.querySelector('.page'); // Замените на ваш селектор
 
         if (viewportWidth !== target.width) {
             viewportWidth = window.innerWidth;
             viewportHeight = window.innerHeight;
         }
 
+        // Убираем фиксированный отступ, чтобы не скрывать контент
         if (viewportHeight - target.height > 150) {
             handleScrollToTop();
             var adjustment = viewportHeight - target.height - offset;
-            page.style.bottom = 0 + "px";
+            page.style.bottom = "0px"; // Убираем отступ
+            page.style.transform = `translateY(${adjustment}px)`; // Сдвигаем контент
         } else if (
             viewportHeight === target.height ||
             viewportHeight - target.height <= 150
         ) {
             offset = viewportHeight - target.height;
-            page.style.bottom = "0px";
+            page.style.bottom = "0px"; // Убираем отступ
+            page.style.transform = "translateY(0)"; // Возвращаем контент на место
         }
     });
 }
