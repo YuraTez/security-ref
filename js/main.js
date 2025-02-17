@@ -31,7 +31,7 @@ const progressNum = document.querySelector('.progress-bar__num span'); // Эле
 const overlay = document.querySelector('.overlay');
 
 // Переменная для отслеживания текущего таба
-let currentTab = 11 ;
+let currentTab = 0 ;
 
 $(".tab-start").on("click" , ()=>{
     $(".progress-bar").removeClass("hide");

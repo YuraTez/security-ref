@@ -14,11 +14,16 @@
   scroll-behavior: smooth;
 }
 
-body,html,.container {
+body,html {
   height: 100dvh;
   overflow: hidden;
   transition: .3s;
 }
+
+.container{
+  height: 100dvh;
+}
+
 
 input[type="checkbox"] {
   display: none;
@@ -469,7 +474,7 @@ iframe {
 }
 
 .tab-email {
-  height: 72vh;
+  height: calc(100vh - 109px);
   max-height: 550px;
   overflow: auto;
   padding-top: 30px;
@@ -1435,8 +1440,6 @@ iframe {
   }
 
   .tab-email{
-    height: 72vh;
-    overflow: auto;
     padding-bottom: 30px;
   }
 
