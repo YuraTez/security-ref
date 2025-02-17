@@ -15,7 +15,7 @@
   scroll-behavior: smooth;
 }
 
-body {
+body,html {
   height: 100dvh;
   overflow: hidden;
   transition: .3s;
