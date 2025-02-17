@@ -489,3 +489,9 @@ if (visualViewport) {
 
 // Добавление обработчика события для прокрутки вверх при завершении касания
 document.addEventListener("touchend", handleScrollToTop);*/
+
+function adjustHeight() {
+    document.body.style.height = `${window.innerHeight}px`;
+}
+window.addEventListener('resize', adjustHeight);
+adjustHeight(); // Call it on page load
