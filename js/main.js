@@ -450,3 +450,23 @@ var solution = lottie.loadAnimation({
     autoplay: true, // автозапуск
     path: 'animation/SecurityApp_Solution.json'
 });
+
+
+function adjustHeight() {
+    const vh = window.innerHeight * 0.01; // 1% от высоты окна
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+window.addEventListener('resize', adjustHeight);
+window.addEventListener('load', adjustHeight);
+
+
+const emailInput = document.querySelector('.input-email');
+
+emailInput.addEventListener('focus', () => {
+    document.body.style.paddingBottom = '0'; // Установите нужный отступ
+});
+
+emailInput.addEventListener('blur', () => {
+    document.body.style.paddingBottom = '0'; // Верните к исходному значению
+});

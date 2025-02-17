@@ -1365,29 +1365,5 @@
 <script src="js/payment.js?v=4"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
 <script src="js/main.js?v=5"></script>
-<script>
-    const calcViewportHeight = () => window.visualViewport
-        ? window.visualViewport.height
-        : Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    window.history.scrollRestoration = 'manual';
-    document.body.style.setProperty('--viewport-height', `${calcViewportHeight()}px`);
-
-    const calcViewportWidth = () => Math.min(window.visualViewport
-        ? window.visualViewport.width
-        : Math.max(document.documentElement.clientWidth, window.innerWidth || 0), 960);
-    document.body.style.setProperty('--viewport-width', `${calcViewportWidth()}px`);
-
-    const setViewportSize = () => {
-        const updatedHeight = calcViewportHeight();
-        const updatedWidth = calcViewportWidth();
-        if (getComputedStyle(document.body).getPropertyValue('--viewport-height') !== `${updatedHeight}px`) {
-            document.body.style.setProperty('--viewport-height', `${updatedHeight}px`);
-        }
-        if (getComputedStyle(document.body).getPropertyValue('--viewport-width') !== `${updatedWidth}px`) {
-            document.body.style.setProperty('--viewport-width', `${updatedWidth}px`);
-        }
-    };
-    window.addEventListener('resize', setViewportSize);
-</script>
 </body>
 </html>
