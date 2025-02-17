@@ -1,3 +1,21 @@
+const checkInterval = 100;
+const maxAttempts = 50;
+
+let attempts = 0;
+
+const checkBlockVisibility = setInterval(() => {
+    const block = document.querySelector(".tab-start-page");
+
+    if (block && block.offsetWidth > 0 && block.offsetHeight > 0) {
+        logView("landing_page_view")
+        clearInterval(checkBlockVisibility); // Останавливаем проверку
+    } else if (attempts >= maxAttempts) {
+        clearInterval(checkBlockVisibility); // Останавливаем проверку
+    }
+
+    attempts++;
+}, checkInterval);
+
 setTimeout(()=>{
     $(".risk-line__indicator").addClass("active");
 },1000)
@@ -13,7 +31,7 @@ const progressNum = document.querySelector('.progress-bar__num span'); // Эле
 const overlay = document.querySelector('.overlay');
 
 // Переменная для отслеживания текущего таба
-let currentTab = 0;
+let currentTab = 11 ;
 
 $(".tab-start").on("click" , ()=>{
     $(".progress-bar").removeClass("hide");
@@ -158,11 +176,8 @@ nextButtons.forEach(button => {
             currentTab++;
         }
         let dataCurrentTab = tabs[currentTab].getAttribute("data-tab")
-
         if (dataCurrentTab === "email") {
-            if (validEmail($(".input-email"))) {
-                logView(objEventAmplitude[dataCurrentTab])
-            }
+            logView(objEventAmplitude[dataCurrentTab])
         }else if(objEventAmplitude[dataCurrentTab] !== undefined){
             logView(objEventAmplitude[dataCurrentTab])
         }

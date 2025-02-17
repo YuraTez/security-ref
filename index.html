@@ -138,7 +138,7 @@
         </div>
         <div class="protection-status">
             <div class="protection-status__title">Your Protection Status:</div>
-            <div class="protection-status__label">
+            <div class="protection-status__label tab-start">
                 <svg width="145" height="30" viewBox="0 0 145 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="145" height="30" rx="15" fill="#C6C6C8" fill-opacity="0.3"/>
                     <path d="M14.3555 8.64645C14.1602 8.45118 13.8437 8.45118 13.6484 8.64645C13.4531 8.84171 13.4531 9.15829 13.6484 9.35355L25.6484 21.3536C25.8437 21.5488 26.1602 21.5488 26.3555 21.3536C26.5508 21.1583 26.5508 20.8417 26.3555 20.6464L14.3555 8.64645Z" fill="black" fill-opacity="0.35"/>
@@ -185,7 +185,7 @@
             </div>
             <div class="tab-start">
                 <div class="btn btn--blue">
-                    Scan Now
+                    Check Now
                 </div>
             </div>
         </div>
@@ -658,9 +658,7 @@
                     14:59
                 </div>
             </div>
-            <div class="next-tab">
-                <div class="btn btn-blue pay-button btn--time">Protect now</div>
-            </div>
+            <a href="#orderInfo" class="btn btn-blue btn--time">Protect now</a>
         </div>
         <div class="title">
             Your iPhone may be<br>
@@ -931,7 +929,7 @@
                 </div>
             </div>
         </div>
-        <div class="order-info">
+        <div class="order-info" id="orderInfo">
             <div class="order-info-head">
                 <div class="order-info-head__subtitle">
                     Sentry
@@ -956,8 +954,9 @@
                     </div>
                 </div>
                 <div class="order-time__price">
-                    <div class="order-time__price-time">$1/week</div>
-                    <div class="order-time__price-billed">Billed monthly</div>
+                    <div class="order-time__price-time">$0.99 for <br>
+                        <span>weekly trial</span>
+                    </div>
                 </div>
             </div>
             <div class="tab-btn">
