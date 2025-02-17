@@ -451,7 +451,7 @@ var solution = lottie.loadAnimation({
     path: 'animation/SecurityApp_Solution.json'
 });
 
-
+/*
 function handleScrollToTop() {
     window.scrollTo(0, document.body.scrollHeight);
 }
@@ -488,4 +488,4 @@ if (visualViewport) {
 }
 
 // Добавление обработчика события для прокрутки вверх при завершении касания
-document.addEventListener("touchend", handleScrollToTop);
+document.addEventListener("touchend", handleScrollToTop);*/
