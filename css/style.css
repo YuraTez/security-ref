@@ -15,15 +15,12 @@
   scroll-behavior: smooth;
 }
 
-html{
-  height: calc(var(--viewport-height) - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
-  min-height: -webkit-fill-available;
-}
-
 body {
   height: 100%;
   overflow: hidden;
   transition: .3s;
+  height: calc(var(--viewport-height) - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
+  min-height: -webkit-fill-available;
 }
 
 input[type="checkbox"] {
