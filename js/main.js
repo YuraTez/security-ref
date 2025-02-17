@@ -479,7 +479,7 @@ if (visualViewport) {
         if (viewportHeight - target.height > 150) {
             handleScrollToTop();
             var adjustment = viewportHeight - target.height - offset;
-            page.style.bottom = adjustment + "px";
+            page.style.bottom = 0 + "px";
         } else if (
             viewportHeight === target.height ||
             viewportHeight - target.height <= 150
