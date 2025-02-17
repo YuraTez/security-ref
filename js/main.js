@@ -456,111 +456,37 @@ function handleScrollToTop() {
     window.scrollTo(0, 0);
 }
 
+// Проверка наличия визуального вьюпорта для обработки изменения размера
+var visualViewport = window.visualViewport;
+var offset = 0;
 
+if (visualViewport) {
+    var viewportWidth = window.innerWidth;
+    var viewportHeight = window.innerHeight;
 
-// Добавляем класс "is-safari" к элементу documentElement
-document.documentElement.classList.add("is-safari");
+    visualViewport.addEventListener("resize", function(event) {
+        var target = event.target; // Получаем целевой элемент события
+        var page = document.querySelector('.page'); // Замените на ваш селектор
 
-const IS_TOUCH_SUPPORTED = false;
-const IS_STICKY_INPUT_BUGGED = true;
-
-const overlayCounter = {
-    isOverlayActive: false,
-};
-
-// Определяем, какой объект использовать для обработки вьюпорта
-const w = window.visualViewport || window; // * handle iOS keyboard
-let setViewportVH = false;
-let lastVH;
-
-// Функция для установки высоты вьюпорта
-const setVH = function() {
-    let vh = (setViewportVH && !overlayCounter.isOverlayActive
-        ? (w.height || window.innerHeight)
-        : window.innerHeight) * 0.01;
-
-    vh = +vh.toFixed(2);
-
-    if (lastVH === vh) {
-        return;
-    } else if (IS_TOUCH_SUPPORTED && lastVH < vh && vh - lastVH > 1) {
-        // (Android) исправление размытия полей ввода при закрытии клавиатуры
-        blurActiveElement();
-    }
-
-    lastVH = vh;
-
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-};
-
-// Добавляем обработчик события resize
-window.addEventListener("resize", setVH); // iOS
-
-// Устанавливаем начальное значение высоты вьюпорта
-setVH();
-
-if (IS_STICKY_INPUT_BUGGED) {
-    const toggleResizeMode = function() {
-        setViewportVH = IS_STICKY_INPUT_BUGGED && !overlayCounter.isOverlayActive;
-
-        setVH();
-
-        if (w !== window) {
-            if (setViewportVH) {
-                window.removeEventListener("resize", setVH);
-                w.addEventListener("resize", setVH);
-            } else {
-                w.removeEventListener("resize", setVH);
-                window.addEventListener("resize", setVH);
-            }
+        if (viewportWidth !== target.width) {
+            viewportWidth = window.innerWidth;
+            viewportHeight = window.innerHeight;
         }
-    };
 
-    toggleResizeMode();
+        if (viewportHeight - target.height > 150) {
+            handleScrollToTop();
+            var adjustment = viewportHeight - target.height - offset;
+            page.style.bottom = adjustment + "px";
+        } else if (
+            viewportHeight === target.height ||
+            viewportHeight - target.height <= 150
+        ) {
+            offset = viewportHeight - target.height;
+            page.style.bottom = "0px";
+        }
+    });
 }
 
-const o = { capture: true, passive: false };
-const passiveOptions = { passive: true };
-
-let startY = 0;
-let lastFocusOutTimeStamp = 0;
-
-// Обработчик события touchmove
-const onTouchMove = function(e) {
-    const touch = e.touches[0];
-
-    const scrollable = findUpClassName(touch.target, "scrollable-y");
-    if (scrollable) {
-        const y = touch.clientY; // Используем clientY
-        const scrolled = startY - y;
-
-        const scrollTop = scrollable.scrollTop;
-        const scrollHeight = scrollable.scrollHeight;
-        const clientHeight = scrollable.clientHeight;
-        const nextScrollTop = scrollTop
-            ? Math.round(scrollTop + scrollable.clientHeight + scrolled)
-            : scrollTop + scrolled;
-
-        const needCancel =
-            scrollHeight === clientHeight ||
-            nextScrollTop >= scrollHeight ||
-            nextScrollTop <= 0;
-
-        if (needCancel) {
-            e.preventDefault();
-        }
-    } else {
-        e.preventDefault();
-    }
-};
-
-// Обработчик события touchstart
-const onTouchStart = function(e) {
-    if (e.touches.length > 1) return;
-    const touchStart = e.touches[0];
-    startY = touchStart.clientY; // Используем clientY
-};
-
-// Пример добавления обработчиков событий
-document.addEventListener("touchstart", onTouchStart, o);
-document.addEventListener("touchmove", onTouchMove, o);
+// Добавление обработчика события для прокрутки вверх при завершении касания
+/*
+document.addEventListener("touchend", handleScrollToTop);*/
