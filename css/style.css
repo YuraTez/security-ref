@@ -470,6 +470,7 @@ iframe {
 
 .tab-email {
   height: 72vh;
+  max-height: 550px;
   overflow: auto;
   padding-top: 30px;
 }
