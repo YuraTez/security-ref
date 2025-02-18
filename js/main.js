@@ -28,7 +28,6 @@ const nextButtons = document.querySelectorAll('.next-tab .btn');
 const backButton = document.querySelector('.back-tab'); // Кнопка "Назад"
 const progressBar = document.querySelector('.progress-bar-content');
 const progressNum = document.querySelector('.progress-bar__num span'); // Элемент для отображения прогресса
-const overlay = document.querySelector('.overlay');
 
 // Переменная для отслеживания текущего таба
 let currentTab = 0 ;
