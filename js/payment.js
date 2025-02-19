@@ -37,14 +37,21 @@ function generateRandomString(length) {
 
 function postData(){
     const link = new URL(window.location.href);
-    const clickId = link.searchParams.get('click_id') !== null ? link.searchParams.get('click_id') : generateUUID(10);
+
+    let clickId
+
+    if(getCookie()){
+        clickId = getCookie("userId")
+    }else{
+        clickId = link.searchParams.get('click_id') !== null ? link.searchParams.get('click_id') : generateUUID(10);
+    }
     const data = {
         "order_id": generateUUIDString(),
         "product_id" : "0598d54b-7240-4c67-913a-ab188240c14a",
         "order_description": "Premium package",
         "customer_account_id" : clickId ,
         "product_price_id": "625915e8-9830-45b8-b75e-5953fd589c9e",
-        "customer_email": $(".input-email").val(),
+        "customer_email": getCookie("userEmail"),
     };
     amplitude.logEvent('frame_loading_started');
 

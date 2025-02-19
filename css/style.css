@@ -648,7 +648,7 @@ iframe {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 72px;
+  margin-bottom: 4px;
 }
 
 .scan-result__el {
@@ -1610,13 +1610,26 @@ iframe {
   color: #c6c6c8;
 }
 
+.tab-start{
+  animation: pulse 1s infinite;
+}
 
 
 
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1); /* начальный и конечный размер */
+  }
+  50% {
+    transform: scale(1.05); /* увеличенный размер */
+  }
+}
 
-
-
-
+.scroll-next{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 44px;
+}
 
 
 

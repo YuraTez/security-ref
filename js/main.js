@@ -29,8 +29,84 @@ const backButton = document.querySelector('.back-tab'); // Кнопка "Наз�
 const progressBar = document.querySelector('.progress-bar-content');
 const progressNum = document.querySelector('.progress-bar__num span'); // Элемент для отображения прогресса
 
+
+function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); // Устанавливаем время жизни куки
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = `${name}=${value}; ${expires}; path=/`; // Записываем куку
+}
+
+// Функция для получения куки
+function getCookie(name) {
+    const nameEQ = `${name}=`;
+    const cookies = document.cookie.split(';');
+
+    for (let cookie of cookies) {
+        cookie = cookie.trim(); // Убираем пробелы
+        if (cookie.startsWith(nameEQ)) {
+            return cookie.substring(nameEQ.length); // Возвращаем значение куки
+        }
+    }
+    return undefined; // Если кука не найдена, возвращаем undefined
+}
+
+//time
+const timer = () => {
+    const timeBlock = document.querySelectorAll('.time-sale__content');
+
+    timeBlock.forEach((el) => {
+        let time = el.textContent;
+        let [minutes, seconds] = time.split(':').map(Number);
+
+        function updateTime() {
+            if (seconds > 0) {
+                seconds--;
+            } else if (minutes > 0) {
+                minutes--;
+                seconds = 59;
+            }
+
+            const formattedTime =
+                String(minutes).padStart(2, '0') + ':' +
+                String(seconds).padStart(2, '0');
+
+
+            el.innerHTML = formattedTime;
+
+            if (minutes === 0 && seconds === 0) {
+                clearInterval(timer);
+            }
+        }
+
+        const timer = setInterval(updateTime, 1000);
+    })
+}
+
+
 // Переменная для отслеживания текущего таба
-let currentTab = 0 ;
+let currentTab ;
+
+if(getCookie("userId")){
+    $(".logo").addClass("hide")
+    $(".tab-scan").addClass("d-none")
+    currentTab = 14
+
+    timer()
+
+    $('.info-slider').slick({
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        dots: true,
+        prevArrow: false,
+        nextArrow: false,
+        autoplay: true,
+        autoplaySpeed: 2000,
+    });
+}else{
+    currentTab = 0
+}
 
 $(".tab-start").on("click" , ()=>{
     $(".progress-bar").removeClass("hide");
@@ -238,38 +314,6 @@ $(".btn").on("click" , function (){
     $(this).addClass("active")
 })
 
-//time
-const timer = () => {
-    const timeBlock = document.querySelectorAll('.time-sale__content');
-
-    timeBlock.forEach((el) => {
-        let time = el.textContent;
-        let [minutes, seconds] = time.split(':').map(Number);
-
-        function updateTime() {
-            if (seconds > 0) {
-                seconds--;
-            } else if (minutes > 0) {
-                minutes--;
-                seconds = 59;
-            }
-
-            const formattedTime =
-                String(minutes).padStart(2, '0') + ':' +
-                String(seconds).padStart(2, '0');
-
-
-            el.innerHTML = formattedTime;
-
-            if (minutes === 0 && seconds === 0) {
-                clearInterval(timer);
-            }
-        }
-
-        const timer = setInterval(updateTime, 1000);
-    })
-}
-
 function startAnimationScan() {
     setTimeout(function () {
 
@@ -294,6 +338,10 @@ function startAnimationScan() {
 function createUser(){
     const link = new URL(window.location.href);
     const clickId = link.searchParams.get('click_id') !== null ? link.searchParams.get('click_id') : generateUUID(10);
+
+    setCookie('userId', clickId, 90);
+    setCookie('userEmail', $(".input-email").val(), 90);
+
     const url = "https://rocknlabs.com/api/user/create";
     const data = {
         "email": $(".input-email").val(),
@@ -448,4 +496,16 @@ var solution = lottie.loadAnimation({
     loop: true, // зацикливание
     autoplay: true, // автозапуск
     path: 'animation/SecurityApp_Solution.json'
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.scroll-next').addEventListener('click', function() {
+        const container = document.querySelector('.tab-info');
+        const target = document.getElementById('scrollTarget');
+        const targetPosition = target.getBoundingClientRect().top + container.getBoundingClientRect().top + container.scrollTop - 100;
+        container.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+    });
 });
