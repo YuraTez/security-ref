@@ -104,6 +104,7 @@ if(getCookie("userId")){
         autoplay: true,
         autoplaySpeed: 2000,
     });
+    window.scrollTo(0, 0);
 }else{
     currentTab = 0
 }
