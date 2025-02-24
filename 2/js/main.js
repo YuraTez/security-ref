@@ -1,3 +1,33 @@
+const objEventAmplitude = {
+    1: "settlement_screen_view",
+    2: "sms_screen_view",
+    3: "interlayer1_view",
+    4: "card1_view",
+    5: "card2_view",
+    6: "card3_select_view",
+    7: "interlayer2_view",
+    8: "password1_view",
+    9: "password2_view",
+    10: "password3_view",
+    "email": "email_view",
+    "mailFocus": "email_field_click",
+    "checkboxOn": "alert_on",
+    "checkboxOff": "alert_off",
+    "emailValid" : "is_lead",
+    "emailError" : "email_error",
+    "scan": "result_view",
+    "info": "paywall_view",
+    "protectClick" : "protect_click",
+    "buy_click" : "buy_click",
+    "paywall_end": "paywall_end",
+    "pay": "checkout_view",
+    "backPay" : "checkout_close"
+}
+
+function logView(data) {
+    amplitude.logEvent(data);
+}
+
 const checkInterval = 100;
 const maxAttempts = 50;
 
@@ -90,7 +120,7 @@ let currentTab ;
 if(getCookie("userId")){
     $(".logo").addClass("hide")
     $(".tab-scan").addClass("d-none")
-    currentTab = 14
+    currentTab = 9
 
     timer()
 
@@ -131,7 +161,7 @@ function currentTabProgressBar (){
     setTimeout(function () {
         tabs[currentTab].classList.add('show');
 
-        if (currentTab < 11) {
+        if (currentTab < 7) {
             // Обновляем прогресс-бар
             progressBarElements.forEach((el, index) => {
                 if (index < currentTab ) {
@@ -153,6 +183,7 @@ function currentTabProgressBar (){
             }
         } else {
             $(".progress-bar").hide()
+            $(".logo").hide()
         }
     }, 500)
 }
@@ -188,38 +219,6 @@ function updateProgress() {
 
 }
 
-
-const objEventAmplitude = {
-    1: "settlement_screen_view",
-    2: "sms_screen_view",
-    3: "interlayer1_view",
-    4: "card1_view",
-    5: "card2_view",
-    6: "card3_select_view",
-    7: "interlayer2_view",
-    8: "password1_view",
-    9: "password2_view",
-    10: "password3_view",
-    "email": "email_view",
-    "mailFocus": "email_field_click",
-    "checkboxOn": "alert_on",
-    "checkboxOff": "alert_off",
-    "emailValid" : "is_lead",
-    "emailError" : "email_error",
-    "scan": "result_view",
-    "info": "paywall_view",
-    "protectClick" : "protect_click",
-    "buy_click" : "buy_click",
-    "paywall_end": "paywall_end",
-    "pay": "checkout_view",
-    "backPay" : "checkout_close"
-}
-
-
-function logView(data) {
-    amplitude.logEvent(data);
-}
-
 // Обработчик события для кнопок "next"
 nextButtons.forEach(button => {
     button.addEventListener('click', function () {
@@ -227,6 +226,8 @@ nextButtons.forEach(button => {
 
         // Проверяем, не достигли ли мы последнего таба
         if (currentTab < tabs.length - 1) {
+            currentTab++;
+
             if(currentTab < 7 && this.classList.contains("show-alert")){
                 parent.classList.add("show-alert")
                 setTimeout(()=>{
@@ -240,7 +241,7 @@ nextButtons.forEach(button => {
                 backButton.classList.remove('d-none');
                 progressBar.classList.remove('start');
             }
-            currentTab++;
+
 
         } else {
             updateProgress();
@@ -300,20 +301,6 @@ $(".btn").on("click" , function (){
     });
     $(this).addClass("active")
 })
-
-function startAnimationScan() {
-    setTimeout(function () {
-        $(".tab").removeClass("show active");
-
-        setTimeout(()=>{
-          $(".tab-scan").removeClass("z-index")
-          $(".tab-scan").addClass("d-none")
-        },300)
-
-        $(".tab-result").addClass("show active");
-        currentTab++;
-    }, 6000)
-}
 
 function createUser(){
     const link = new URL(window.location.href);
@@ -424,21 +411,6 @@ function handleScroll() {
 // Добавление обработчика события
 tabInfo.addEventListener('scroll', handleScroll);
 
-$("#openInfoPage").on("click", function () {
-    timer()
-
-    $('.info-slider').slick({
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        dots: true,
-        prevArrow: false,
-        nextArrow: false,
-        autoplay: true,
-        autoplaySpeed: 2000,
-    });
-})
-
 $('.input-email').on('keydown', function(event) {
     if (event.key === 'Enter') {
         $(this).blur();
@@ -472,3 +444,86 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+const elements = document.querySelectorAll('.scan-animate__el');
+let currentIndex = 0;
+
+function animateElement(index) {
+    if (index >= elements.length){
+        setTimeout(()=>{
+            $(".tab-scan").removeClass("z-index")
+            $(".tab-scan").addClass("d-none")
+            timer()
+            slider(".info-slider")
+        },1500)
+        currentTab++;
+        updateProgress();
+        return;
+    }
+
+    const element = elements[index];
+    const progressLine = element.querySelector('.scan-animate__el-progress-line');
+    const infoNum = element.querySelector('.scan-animate__el-info-num');
+    const infoIcon = element.querySelector('.scan-animate__el-info-icon');
+    let progress = 0;
+
+    // Устанавливаем цвет полоски для первого элемента
+    if (index === 0) {
+        progressLine.style.backgroundColor = 'blue'; // Синяя полоска для первого элемента
+    }
+
+    // Добавляем класс show к текущему элементу
+    element.classList.add('show');
+
+    const interval = setInterval(() => {
+        progress += 5; // Увеличиваем прогресс на 5%
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            infoNum.textContent = `${progress}%`;
+            progressLine.style.width = `${progress}%`;
+
+            // Сначала скрываем текст, затем показываем иконку
+            setTimeout(() => {
+                infoNum.style.display = 'none'; // Скрываем текст
+                infoIcon.classList.remove('d-none'); // Показываем иконку
+            }, 300); // Задержка перед показом иконки
+
+            // Скрываем полоску прогресса
+            setTimeout(() => {
+                element.querySelector('.scan-animate__el-progress').style.display = 'none';
+                // Добавляем класс .done после скрытия полоски
+                element.classList.add('done');
+            }, 600); // Задержка перед добавлением класса .done
+
+            setTimeout(() => {
+                animateElement(index + 1); // Запускаем следующий элемент
+            }, 800); // Задержка перед переходом к следующему элементу
+        } else {
+            // Для всех, кроме первого, добавляем класс .error, если прогресс >= 50
+            if (index !== 0 && progress >= 50) {
+                element.classList.add('error'); // Добавляем класс .error
+            }
+            infoNum.textContent = `${progress}%`;
+            progressLine.style.width = `${progress}%`;
+        }
+    }, 100); // Интервал обновления прогресса
+}
+
+function startAnimationScan() {
+    animateElement(currentIndex);
+
+}
+
+function slider(element){
+    $(element).slick({
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        dots: true,
+        prevArrow: false,
+        nextArrow: false,
+        autoplay: true,
+        autoplaySpeed: 2000,
+    });
+}
