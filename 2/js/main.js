@@ -235,7 +235,7 @@ nextButtons.forEach(button => {
                     backButton.classList.remove('d-none');
                     progressBar.classList.remove('start');
                     setTimeout(()=> parent.classList.remove("show-alert"),100)
-                },2000)
+                },3500)
             }else{
                 updateProgress();
                 backButton.classList.remove('d-none');
