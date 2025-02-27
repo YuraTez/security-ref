@@ -624,7 +624,7 @@ $('.video-btn__start, .video-btn__stop').on('click', function() {
 
     $('.info-slider__el-video video').each(function() {
         if (this !== $video) {
-            this.muted = true; // Мутим остальные видео
+            this.muted = true;
             $(this).closest('.info-slider__el').find('.video-btn__start').addClass('active');
             $(this).closest('.info-slider__el').find('.video-btn__stop').removeClass('active');
         }
@@ -634,11 +634,9 @@ $('.video-btn__start, .video-btn__stop').on('click', function() {
         $(this).removeClass('active');
         $sliderEl.find('.video-btn__stop').addClass('active');
         $video.muted = false;
-        $video.play();
     } else {
         $(this).removeClass('active');
         $sliderEl.find('.video-btn__start').addClass('active');
         $video.muted = true;
-        $video.pause();
     }
 });
