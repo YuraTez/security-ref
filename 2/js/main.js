@@ -620,17 +620,25 @@ function slider(element){
 
 $('.video-btn__start, .video-btn__stop').on('click', function() {
     let $sliderEl = $(this).closest('.info-slider__el');
-    let $video = $sliderEl.find('video').get(0); // Получаем элемент видео
+    let $video = $sliderEl.find('.info-slider__el-video video').get(0);
+
+    $('.info-slider__el-video video').each(function() {
+        if (this !== $video) {
+            this.muted = true; // Мутим остальные видео
+            $(this).closest('.info-slider__el').find('.video-btn__start').addClass('active');
+            $(this).closest('.info-slider__el').find('.video-btn__stop').removeClass('active');
+        }
+    });
 
     if ($(this).hasClass('video-btn__start')) {
-
         $(this).removeClass('active');
         $sliderEl.find('.video-btn__stop').addClass('active');
-        $video.muted = false; // Включаем звук
+        $video.muted = false;
+        $video.play();
     } else {
-
         $(this).removeClass('active');
         $sliderEl.find('.video-btn__start').addClass('active');
         $video.muted = true;
+        $video.pause();
     }
 });
