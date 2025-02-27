@@ -26,15 +26,15 @@ const objEventAmplitude = {
 
 const  quizContent ={
     1 : {
-        "title" : "Identity Theft Warning",
+        "title" : "Identity Theft Risk",
         "text" : "Scammers might be attempting to collect your data for identity theft."
     },
     2 : {
-        "title" : "Your Passwords Are Easy to Hack",
+        "title" : "Weak & Exposed Passwords",
         "text" : "Reusing passwords means that if one gets leaked, all your accounts are at risk."
     },
     3 : {
-        "title" : "Your Passwords Are Easy to Hack",
+        "title" : "Weak & Exposed Passwords",
         "text" : "Reusing passwords means that if one gets leaked, all your accounts are at risk."
     },
     4 : {
@@ -42,7 +42,7 @@ const  quizContent ={
         "text" : "Without regular checks, fraudulent transactions could go unnoticed."
     },
     5 : {
-        "title" : "Risks of Financial Fraud",
+        "title" : "Exposure to Call Fraud",
         "text" : "Scam calls and fake websites often lead to stolen personal or financial information."
     },
     6 : {
@@ -50,15 +50,15 @@ const  quizContent ={
         "text" : "Clicking on these “Virus“ warnings installs real malware and steals your data."
     },
     7 : {
-        "title" : "Your Data Is Already Out There",
+        "title" : "Data Exposed",
         "text" : "Leaked personal info fuels scams and identity theft."
     },
     8 : {
-        "title" : "Your Phone Won’t Warn You",
+        "title" : "Phone Not Protected",
         "text" : "Without protection, scam calls and fake sites can trick you."
     },
     9 : {
-        "title" : "Your Accounts Aren’t Safe",
+        "title" : "Accounts Aren’t Safe",
         "text" : "A single data breach could let hackers in."
     },
 }
@@ -617,3 +617,20 @@ function slider(element){
         autoplaySpeed: 2000,
     });
 }
+
+$('.video-btn__start, .video-btn__stop').on('click', function() {
+    let $sliderEl = $(this).closest('.info-slider__el');
+    let $video = $sliderEl.find('video').get(0); // Получаем элемент видео
+
+    if ($(this).hasClass('video-btn__start')) {
+
+        $(this).removeClass('active');
+        $sliderEl.find('.video-btn__stop').addClass('active');
+        $video.muted = false; // Включаем звук
+    } else {
+
+        $(this).removeClass('active');
+        $sliderEl.find('.video-btn__start').addClass('active');
+        $video.muted = true;
+    }
+});

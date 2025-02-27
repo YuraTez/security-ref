@@ -738,6 +738,10 @@ iframe {
   padding: 32px 0 40px;
 }
 
+.info-slider__el{
+  position: relative;
+}
+
 .info-slider__el-video{
   height: 339px;
   background: #f9f9f9;
@@ -750,6 +754,22 @@ iframe {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.video-btn__start,
+.video-btn__stop{
+  display: none;
+}
+
+.video-btn__start.active,
+.video-btn__stop.active{
+  display: flex;
+}
+
+.video-btn{
+  position: absolute;
+  top: 28px;
+  right: 28px;
 }
 
 .info-slider .slick-list {
