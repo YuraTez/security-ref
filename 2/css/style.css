@@ -756,6 +756,27 @@ iframe {
   object-fit: cover;
 }
 
+.info-slider__el-video video::-webkit-media-controls-panel {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.info-slider__el-video video::-webkit-media-controls-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.info-slider__el-video video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
 .video-btn__start,
 .video-btn__stop{
   display: none;
