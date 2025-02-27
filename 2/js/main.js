@@ -212,17 +212,8 @@ if(getCookie("userId")){
     currentTab = 9
 
     timer()
+    slider($('.info-slider'))
 
-    $('.info-slider').slick({
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        dots: true,
-        prevArrow: false,
-        nextArrow: false,
-        autoplay: true,
-        autoplaySpeed: 2000,
-    });
     window.scrollTo(0, 0);
 }else{
     currentTab = 0
