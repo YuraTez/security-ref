@@ -24,6 +24,92 @@ const objEventAmplitude = {
     "backPay" : "checkout_close"
 }
 
+const  quizContent ={
+    1 : {
+        "title" : "Identity Theft Warning",
+        "text" : "Scammers might be attempting to collect your data for identity theft."
+    },
+    2 : {
+        "title" : "Your Passwords Are Easy to Hack",
+        "text" : "Reusing passwords means that if one gets leaked, all your accounts are at risk."
+    },
+    3 : {
+        "title" : "Your Passwords Are Easy to Hack",
+        "text" : "Reusing passwords means that if one gets leaked, all your accounts are at risk."
+    },
+    4 : {
+        "title" : "Fraud Risks",
+        "text" : "Without regular checks, fraudulent transactions could go unnoticed."
+    },
+    5 : {
+        "title" : "Risks of Financial Fraud",
+        "text" : "Scam calls and fake websites often lead to stolen personal or financial information."
+    },
+    6 : {
+        "title" : "Your Device is Compromised",
+        "text" : "Clicking on these “Virus“ warnings installs real malware and steals your data."
+    },
+    7 : {
+        "title" : "Your Data Is Already Out There",
+        "text" : "Leaked personal info fuels scams and identity theft."
+    },
+    8 : {
+        "title" : "Your Phone Won’t Warn You",
+        "text" : "Without protection, scam calls and fake sites can trick you."
+    },
+    9 : {
+        "title" : "Your Accounts Aren’t Safe",
+        "text" : "A single data breach could let hackers in."
+    },
+}
+
+const templateQuizErrorElement = (obj)=>{
+    return`
+    <div class="scan-result__el">
+                    <div class="scan-result__el-icon">
+                        <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="12" y="8.5" width="8" height="18" fill="white"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3 16.5C3 9.3203 8.8203 3.5 16 3.5C23.1797 3.5 29 9.3203 29 16.5C29 23.6797 23.1797 29.5 16 29.5C8.8203 29.5 3 23.6797 3 16.5ZM16 11.5C16.5523 11.5 17 11.9477 17 12.5V17.5C17 18.0523 16.5523 18.5 16 18.5C15.4477 18.5 15 18.0523 15 17.5V12.5C15 11.9477 15.4477 11.5 16 11.5ZM16 22.5C16.5523 22.5 17 22.0523 17 21.5C17 20.9477 16.5523 20.5 16 20.5C15.4477 20.5 15 20.9477 15 21.5C15 22.0523 15.4477 22.5 16 22.5Z" fill="#FF453A"/>
+                        </svg>
+                    </div>
+                    <div class="scan-result__el-description">
+                        <div class="scan-result__el-title">${obj.title}</div>
+                        <div class="scan-result__el-text">${obj.text}</div>
+                    </div>
+                </div>
+    `
+}
+
+function addNumbersRecursively(currentNumber ,quizCnt ) {
+    if (quizCnt.length < 3) {
+        quizCnt.push(currentNumber);
+        addNumbersRecursively(currentNumber + 1 , quizCnt);
+    }
+}
+
+
+function addErrorQuizElems(quizCnt){
+    let containerQuizErrorElems = document.querySelector(".scan-result__list")
+
+    if(quizCnt.length < 3){
+
+        addNumbersRecursively(7 , quizCnt)
+
+        quizCnt.forEach((el) => {
+            containerQuizErrorElems.innerHTML +=  templateQuizErrorElement(quizContent[el]);
+        });
+    }else{
+        quizCnt.sort().forEach((el)=>{
+
+            if(el === 3  && quizCnt.includes(2)){
+                return
+            }
+
+            containerQuizErrorElems.innerHTML +=  templateQuizErrorElement(quizContent[el]);
+        })
+    }
+}
+
 function logView(data) {
     amplitude.logEvent(data);
 }
@@ -116,10 +202,13 @@ const timer = () => {
 
 // Переменная для отслеживания текущего таба
 let currentTab ;
+let quizError ;
 
 if(getCookie("userId")){
     $(".logo").addClass("hide")
     $(".tab-scan").addClass("d-none")
+    quizError = JSON.parse(getCookie('quiz'));
+    addErrorQuizElems(quizError)
     currentTab = 9
 
     timer()
@@ -137,6 +226,7 @@ if(getCookie("userId")){
     window.scrollTo(0, 0);
 }else{
     currentTab = 0
+    quizError = []
 }
 
 $(".tab-start").on("click" , ()=>{
@@ -219,27 +309,70 @@ function updateProgress() {
 
 }
 
+function disableBtn(container){
+    let list = container.querySelectorAll(".btn")
+    list.forEach((el)=>{
+        el.classList.add("disabled")
+    })
+
+    setTimeout(()=>{
+        list.forEach((el)=>{
+            el.classList.remove("disabled")
+        })
+    },3000)
+}
+
+$(".btn").on("click" , function (){
+    if(this.classList.contains("disabled")){
+        return
+    }
+    let btnList = $(this).parent().find(".btn");
+    $.each(btnList, function(index, el) {
+        $(el).removeClass('active');
+    });
+    $(this).addClass("active")
+})
+
 // Обработчик события для кнопок "next"
 nextButtons.forEach(button => {
     button.addEventListener('click', function () {
+        if(this.classList.contains("disabled")){
+            return
+        }
+
         let parent = this.closest(".tab")
 
         // Проверяем, не достигли ли мы последнего таба
         if (currentTab < tabs.length - 1) {
             currentTab++;
 
-            if(currentTab < 7 && this.classList.contains("show-alert")){
+            if(currentTab < 8 && this.classList.contains("show-alert")){
+
+                if (!quizError.includes(currentTab - 1)) {
+
+                    quizError.push(currentTab - 1)
+                }
+
+                disableBtn(this.closest(".tab-btn"))
+
                 parent.classList.add("show-alert")
                 setTimeout(()=>{
                     updateProgress();
                     backButton.classList.remove('d-none');
                     progressBar.classList.remove('start');
                     setTimeout(()=> parent.classList.remove("show-alert"),100)
-                },3500)
+                },3000)
             }else{
                 updateProgress();
                 backButton.classList.remove('d-none');
                 progressBar.classList.remove('start');
+
+
+                let indexQuizError = quizError.indexOf(currentTab - 1)
+
+                if (indexQuizError !== -1) {
+                    quizError.splice(indexQuizError, 1);
+                }
             }
 
 
@@ -293,14 +426,6 @@ $(".tab-pay .back-tab").on("click" , function (){
 // Инициализация
 updateProgress();
 
-
-$(".btn").on("click" , function (){
-    let btnList = $(this).parent().find(".btn");
-    $.each(btnList, function(index, el) {
-        $(el).removeClass('active');
-    });
-    $(this).addClass("active")
-})
 
 function createUser(){
     const link = new URL(window.location.href);
@@ -380,7 +505,7 @@ $(".btn--time").on("click" , ()=>{
     logView(objEventAmplitude["protectClick"])
 })
 
-$("#payProtect").on("click" , ()=>{
+$(".pay-button").on("click" , ()=>{
     logView(objEventAmplitude["buy_click"])
 })
 
@@ -417,34 +542,6 @@ $('.input-email').on('keydown', function(event) {
     }
 });
 
-var statistics = lottie.loadAnimation({
-    container: document.getElementById('statistics'),
-    renderer: 'svg', // тип рендерера
-    loop: true, // зацикливание
-    autoplay: true, // автозапуск
-    path: 'animation/SecurityApp_Statistics.json'
-});
-
-var solution = lottie.loadAnimation({
-    container: document.getElementById('solution'),
-    renderer: 'svg', // тип рендерера
-    loop: true, // зацикливание
-    autoplay: true, // автозапуск
-    path: 'animation/SecurityApp_Solution.json'
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('.scroll-next').addEventListener('click', function() {
-        const container = document.querySelector('.tab-info');
-        const target = document.getElementById('scrollTarget');
-        const targetPosition = target.getBoundingClientRect().top + container.getBoundingClientRect().top + container.scrollTop - 100;
-        container.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-        });
-    });
-});
-
 const elements = document.querySelectorAll('.scan-animate__el');
 let currentIndex = 0;
 
@@ -456,6 +553,8 @@ function animateElement(index) {
             timer()
             slider(".info-slider")
         },1500)
+        addErrorQuizElems(quizError)
+        setCookie('quiz', JSON.stringify(quizError), 90);
         currentTab++;
         updateProgress();
         return;
