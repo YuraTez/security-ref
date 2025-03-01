@@ -220,7 +220,7 @@ if(getCookie("userId")){
     quizError = []
 }
 
-$(".tab-start").on("click" , ()=>{
+$(".tab-start").one("click" , ()=>{
     $(".progress-bar").removeClass("hide");
     setTimeout(function (){
         $(".tab-start-page").removeClass("active show")
@@ -235,7 +235,6 @@ $(".tab-start").on("click" , ()=>{
     window.scrollTo(0, 0);
     currentTabProgressBar ()
     currentTab++
-
 })
 
 function currentTabProgressBar (){
@@ -640,3 +639,29 @@ $('.video-btn__start, .video-btn__stop').on('click', function() {
         $video.muted = true;
     }
 });
+
+
+
+let totalSeconds = 4 * 3600 + 22 * 60 + 31; // 4 часа, 22 минуты, 31 секунда
+
+function updateTimer() {
+    // Вычисляем часы, минуты и секунды
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    // Обновляем отображение таймера
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+    // Уменьшаем общее количество секунд
+    if (totalSeconds > 0) {
+        totalSeconds--;
+    } else {
+        clearInterval(timerInterval); // Останавливаем таймер, когда время истекло
+    }
+}
+
+// Обновляем таймер каждую секунду
+const timerInterval = setInterval(updateTimer, 1000);
