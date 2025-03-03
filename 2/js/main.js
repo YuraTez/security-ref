@@ -642,26 +642,29 @@ $('.video-btn__start, .video-btn__stop').on('click', function() {
 
 
 
-let totalSeconds = 4 * 3600 + 22 * 60 + 31; // 4 часа, 22 минуты, 31 секунда
+let totalSeconds = 4 * 3600 + 22 * 60 + 31;
 
-function updateTimer() {
-    // Вычисляем часы, минуты и секунды
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+window.onload = function() {
 
-    // Обновляем отображение таймера
-    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    function updateTimer() {
+        // Вычисляем часы, минуты и секунды
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
 
-    // Уменьшаем общее количество секунд
-    if (totalSeconds > 0) {
-        totalSeconds--;
-    } else {
-        clearInterval(timerInterval); // Останавливаем таймер, когда время истекло
+        // Обновляем отображение таймера
+        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+        // Уменьшаем общее количество секунд
+        if (totalSeconds > 0) {
+            totalSeconds--;
+        } else {
+            clearInterval(timerInterval); // Останавливаем таймер, когда время истекло
+        }
     }
-}
 
 // Обновляем таймер каждую секунду
-const timerInterval = setInterval(updateTimer, 1000);
+    const timerInterval = setInterval(updateTimer, 1000);
+};

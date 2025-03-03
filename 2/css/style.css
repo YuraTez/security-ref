@@ -127,9 +127,19 @@ textarea {
 
 .tab {
   display: none;
-  padding-top: 70px;
+ /* padding-top: 70px;*/
   opacity: 0;
   transition: 0.5s;
+}
+
+.tab {
+  display: none;
+  margin-top: 70px;
+  opacity: 0;
+  transition: 0.5s;
+  height: calc(100vh - 150px);
+  overflow: auto;
+  padding-bottom: 50px;
 }
 
 .tab.active {
@@ -486,14 +496,16 @@ iframe {
 .tab-pay {
   height: 100dvh;
   overflow: auto;
-  padding: 30px 0 100px;
+  padding: 0 0 100px;
+  margin-top: 30px;
 }
 
 .tab-email {
   height: calc(100vh - 109px);
   max-height: 550px;
   overflow: auto;
-  padding-top: 30px;
+  /*padding-top: 30px;*/
+  margin-top: 30px;
 }
 
 .tab-email__i {
@@ -725,6 +737,7 @@ iframe {
   max-width: 450px;
   padding: 105px 20px 0;
   z-index: -1;
+  margin-top: 0;
 }
 
 .tab-info.active{
@@ -1153,7 +1166,8 @@ iframe {
   height: 100vh;
   display: block;
   z-index: -20;
-  padding-top: 35px;
+  /*padding-top: 35px;*/
+  margin-top: 35px;
 }
 
 .tab-scan.z-index{
@@ -1191,6 +1205,7 @@ iframe {
 
 .tab-success {
   padding-top: 16px;
+  margin-top: 0;
 }
 
 .success__i {
@@ -1318,7 +1333,8 @@ iframe {
   }
 
   .tab-email {
-    padding-top: 10px;
+   /* padding-top: 10px;*/
+    margin-top: 10px;
   }
 
   .email-person {
@@ -1350,7 +1366,8 @@ iframe {
 .tab-email::-webkit-scrollbar,
 .tab-pay::-webkit-scrollbar,
 .tab-start-page::-webkit-scrollbar,
-.success-info::-webkit-scrollbar{
+.success-info::-webkit-scrollbar,
+.tab::-webkit-scrollbar{
   width: 0;
   height: 0;
   background: transparent;
@@ -1364,7 +1381,8 @@ iframe {
 .tab-email::-webkit-scrollbar-thumb,
 .tab-pay::-webkit-scrollbar-thumb,
 .tab-start-page::-webkit-scrollbar-thumb,
-.success-info::-webkit-scrollbar-thumb{
+.success-info::-webkit-scrollbar,
+.tab::-webkit-scrollbar{
   width: 0;
   height: 0;
   background: transparent;
@@ -1780,7 +1798,7 @@ height: 71px;
 
 .tab-start-body{
   position: relative;
-  margin-top: 55px;
+  margin: 55px 0 50px;
   border-radius: 13px;
   box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.12);
   background: #f8f8f8;
@@ -1901,7 +1919,7 @@ height: 71px;
   opacity: 0.6;
   color: #fff;
   text-align: center;
-  margin: 51px 0 17px;
+  margin: 17px 0 0;
 }
 
 .btn--white{
