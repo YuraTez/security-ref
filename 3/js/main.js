@@ -17,7 +17,7 @@ const checkBlockVisibility = setInterval(() => {
 }, checkInterval);
 
 setTimeout(()=>{
-    $(".risk-line__indicator").addClass("active");
+    $(".risk-line").addClass("active");
 },1000)
 
 // Получаем все элементы табов и кнопки
@@ -90,26 +90,20 @@ let currentTab ;
 if(getCookie("userId")){
     $(".logo").addClass("hide")
     $(".tab-scan").addClass("d-none")
-    currentTab = 14
+    currentTab = 12
 
     timer()
 
-    $('.info-slider').slick({
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        dots: true,
-        prevArrow: false,
-        nextArrow: false,
-        autoplay: true,
-        autoplaySpeed: 2000,
-    });
+    slider(".info-slider")
+
     window.scrollTo(0, 0);
 }else{
     currentTab = 0
 }
 
-$(".tab-start").on("click" , ()=>{
+
+
+/*$(".tab-start").on("click" , ()=>{
     $(".progress-bar").removeClass("hide");
     setTimeout(function (){
         $(".tab-start-page").removeClass("active show")
@@ -125,7 +119,7 @@ $(".tab-start").on("click" , ()=>{
     currentTabProgressBar ()
     currentTab++
 
-})
+})*/
 
 function currentTabProgressBar (){
     setTimeout(function () {
@@ -138,11 +132,10 @@ function currentTabProgressBar (){
             changeThemeColor('#fff');
             body.classList.remove('purple-body')
         }
-
-        if (currentTab < 11) {
+        if (currentTab < 10) {
             // Обновляем прогресс-бар
             progressBarElements.forEach((el, index) => {
-                if (index < currentTab ) {
+                if (index < currentTab + 1 ) {
                     el.classList.add('done');
                 } else {
                     el.classList.remove('done');
@@ -150,10 +143,10 @@ function currentTabProgressBar (){
             });
 
             // Обновляем отображение количества пройденных табов
-            progressNum.textContent = currentTab ;
+            progressNum.textContent = currentTab + 1 ;
 
             // Управляем видимостью кнопки "Назад"
-            if (currentTab === 1) {
+            if (!currentTab) {
                 progressBar.classList.add('start');
                 backButton.classList.add('d-none'); // Скрываем кнопку на первом табе
             } else {
@@ -168,7 +161,7 @@ function currentTabProgressBar (){
 // Функция для обновления прогресс-бара и отображения текущего таба
 function updateProgress() {
     window.scrollTo(0, 0);
-    if(currentTab - 1 > 0 && tabs[currentTab - 1].getAttribute("data-tab") === "email"){
+    if(currentTab  > 0 && tabs[currentTab - 1].getAttribute("data-tab") === "email"){
 
         if(!validEmail($(".input-email"))){
             currentTab--
@@ -176,7 +169,7 @@ function updateProgress() {
         }
     }
 
-    if(currentTab  > 0 && tabs[currentTab].getAttribute("data-tab") === "email"){
+    if(currentTab  > 0 && tabs[currentTab - 1].getAttribute("data-tab") === "email"){
        setTimeout(()=>{
            $(".logo").addClass("hide");
        },300)
@@ -234,7 +227,7 @@ nextButtons.forEach(button => {
     button.addEventListener('click', () => {
         // Проверяем, не достигли ли мы последнего таба
         if (currentTab < tabs.length - 1) {
-            if(currentTab > 0 && tabs[currentTab].getAttribute("data-tab") === "6"){
+            if(currentTab > 0 && tabs[currentTab - 1].getAttribute("data-tab") === "5"){
                 if(!$(".checkbox-list__input:checked").length){
                     $('.error-checkbox').addClass("show");
                     setTimeout(()=>{
@@ -315,25 +308,77 @@ $(".btn").on("click" , function (){
     $(this).addClass("active")
 })
 
-function startAnimationScan() {
-    setTimeout(function () {
+const elements = document.querySelectorAll('.scan-animate__el');
+let currentIndex = 0;
 
-        changeThemeColor('#ff453a');
-        body.classList.remove('blue-body')
-        body.classList.add('red-body')
-    }, 3500)
-
-    setTimeout(function () {
-        $(".tab").removeClass("show active");
-
+function animateElement(index) {
+    if (index >= elements.length){
         setTimeout(()=>{
-          $(".tab-scan").removeClass("z-index")
-          $(".tab-scan").addClass("d-none")
-        },300)
+            $(".tab-scan").removeClass("z-index")
+            $(".tab-scan").addClass("d-none")
 
-        $(".tab-result").addClass("show active");
+            timer()
+
+            slider(".info-slider")
+
+        },1500)
         currentTab++;
-    }, 6000)
+        updateProgress();
+        return;
+    }
+
+    const element = elements[index];
+    const progressLine = element.querySelector('.scan-animate__el-progress-line');
+    const infoNum = element.querySelector('.scan-animate__el-info-num');
+    const infoIcon = element.querySelector('.scan-animate__el-info-icon');
+    let progress = 0;
+
+    // Устанавливаем цвет полоски для первого элемента
+    if (index === 0) {
+        progressLine.style.backgroundColor = 'blue'; // Синяя полоска для первого элемента
+    }
+
+    // Добавляем класс show к текущему элементу
+    element.classList.add('show');
+
+    const interval = setInterval(() => {
+        progress += 5; // Увеличиваем прогресс на 5%
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            infoNum.textContent = `${progress}%`;
+            progressLine.style.width = `${progress}%`;
+
+            // Сначала скрываем текст, затем показываем иконку
+            setTimeout(() => {
+                infoNum.style.display = 'none'; // Скрываем текст
+                infoIcon.classList.remove('d-none'); // Показываем иконку
+            }, 300); // Задержка перед показом иконки
+
+            // Скрываем полоску прогресса
+            setTimeout(() => {
+                element.querySelector('.scan-animate__el-progress').style.display = 'none';
+                // Добавляем класс .done после скрытия полоски
+                element.classList.add('done');
+            }, 600); // Задержка перед добавлением класса .done
+
+            setTimeout(() => {
+                animateElement(index + 1); // Запускаем следующий элемент
+            }, 800); // Задержка перед переходом к следующему элементу
+        } else {
+            // Для всех, кроме первого, добавляем класс .error, если прогресс >= 50
+            if (index !== 0 && progress >= 50) {
+                element.classList.add('error'); // Добавляем класс .error
+            }
+            infoNum.textContent = `${progress}%`;
+            progressLine.style.width = `${progress}%`;
+        }
+    }, 100); // Интервал обновления прогресса
+}
+
+function startAnimationScan() {
+    animateElement(currentIndex);
+    startCounter()
 }
 
 function createUser(){
@@ -393,20 +438,9 @@ $("#openScan").on("click", () => {
     if(validEmail($(".input-email"))){
 
         $(".logo").addClass("hide");
-        setTimeout(function (){
-            body.classList.add('blue-body')
-        },300)
-        changeThemeColor('#4040c3');
+
         startAnimationScan()
         $(".tab-scan").addClass("z-index")
-        var statistics = lottie.loadAnimation({
-            container: document.getElementById('lottie'),
-            renderer: 'svg', // тип рендерера
-            loop: true, // зацикливание
-            autoplay: true, // автозапуск
-            path: 'animation/SecurityApp_Sсanner.json'
-        });
-
         createUser()
 
         logView(objEventAmplitude["emailValid"])
@@ -457,15 +491,15 @@ function handleScroll() {
 // Добавление обработчика события
 tabInfo.addEventListener('scroll', handleScroll);
 
-$("#openInfoPage").on("click", function () {
 
-    changeThemeColor('#fff');
+$('.input-email').on('keydown', function(event) {
+    if (event.key === 'Enter') {
+        $(this).blur();
+    }
+});
 
-    body.classList.remove('red-body');
-
-    timer()
-
-    $('.info-slider').slick({
+function slider(element){
+    $(element).slick({
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -475,38 +509,53 @@ $("#openInfoPage").on("click", function () {
         autoplay: true,
         autoplaySpeed: 2000,
     });
-})
+}
 
-$('.input-email').on('keydown', function(event) {
-    if (event.key === 'Enter') {
-        $(this).blur();
+$('.video-btn__start, .video-btn__stop').on('click', function() {
+    let $sliderEl = $(this).closest('.info-slider__el');
+    let $video = $sliderEl.find('.info-slider__el-video video').get(0);
+
+    $('.info-slider__el-video video').each(function() {
+        if (this !== $video) {
+            this.muted = true;
+            $(this).closest('.info-slider__el').find('.video-btn__start').addClass('active');
+            $(this).closest('.info-slider__el').find('.video-btn__stop').removeClass('active');
+        }
+    });
+
+    if ($(this).hasClass('video-btn__start')) {
+        $(this).removeClass('active');
+        $sliderEl.find('.video-btn__stop').addClass('active');
+        $video.muted = false;
+    } else {
+        $(this).removeClass('active');
+        $sliderEl.find('.video-btn__start').addClass('active');
+        $video.muted = true;
     }
 });
 
-var statistics = lottie.loadAnimation({
-    container: document.getElementById('statistics'),
-    renderer: 'svg', // тип рендерера
-    loop: true, // зацикливание
-    autoplay: true, // автозапуск
-    path: 'animation/SecurityApp_Statistics.json'
-});
+function startCounter() {
+    const digits = document.querySelectorAll('.digit');
+    const targetNumber = Math.floor(Math.random() * (150 - 50 + 1)) + 50; // Генерируем случайное число от 50 до 150
+    const duration = 10500; // Время анимации в миллисекундах
+    const stepTime = Math.abs(Math.floor(duration / targetNumber)); // Время на каждый шаг
 
-var solution = lottie.loadAnimation({
-    container: document.getElementById('solution'),
-    renderer: 'svg', // тип рендерера
-    loop: true, // зацикливание
-    autoplay: true, // автозапуск
-    path: 'animation/SecurityApp_Solution.json'
-});
+    let currentNumber = 0;
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('.scroll-next').addEventListener('click', function() {
-        const container = document.querySelector('.tab-info');
-        const target = document.getElementById('scrollTarget');
-        const targetPosition = target.getBoundingClientRect().top + container.getBoundingClientRect().top + container.scrollTop - 100;
-        container.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-        });
+    const interval = setInterval(() => {
+        if (currentNumber < targetNumber) {
+            currentNumber++;
+            updateDigits(currentNumber);
+        } else {
+            clearInterval(interval);
+        }
+    }, stepTime);
+}
+
+function updateDigits(number) {
+    const digits = String(number).padStart(3, '0').split('');
+    digits.forEach((digit, index) => {
+        const span = document.getElementById(`digit${index + 1}`);
+        span.textContent = digit; // Обновляем цифру
     });
-});
+}
