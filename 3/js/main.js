@@ -16,9 +16,6 @@ const checkBlockVisibility = setInterval(() => {
     attempts++;
 }, checkInterval);
 
-setTimeout(()=>{
-    $(".risk-line").addClass("active");
-},1000)
 
 // Получаем все элементы табов и кнопки
 const body = document.querySelector("body");
@@ -92,6 +89,10 @@ if(getCookie("userId")){
     $(".tab-scan").addClass("d-none")
     currentTab = 12
 
+    setTimeout(()=>{
+        $(".risk-line").addClass("active");
+    },1000)
+
     timer()
 
     slider(".info-slider")
@@ -100,7 +101,6 @@ if(getCookie("userId")){
 }else{
     currentTab = 0
 }
-
 
 
 /*$(".tab-start").on("click" , ()=>{
@@ -321,6 +321,8 @@ function animateElement(index) {
 
             slider(".info-slider")
 
+            $(".risk-line").addClass("active");
+
         },1500)
         currentTab++;
         updateProgress();
@@ -364,7 +366,7 @@ function animateElement(index) {
 
             setTimeout(() => {
                 animateElement(index + 1); // Запускаем следующий элемент
-            }, 800); // Задержка перед переходом к следующему элементу
+            }, 600); // Задержка перед переходом к следующему элементу
         } else {
             // Для всех, кроме первого, добавляем класс .error, если прогресс >= 50
             if (index !== 0 && progress >= 50) {
@@ -373,7 +375,7 @@ function animateElement(index) {
             infoNum.textContent = `${progress}%`;
             progressLine.style.width = `${progress}%`;
         }
-    }, 100); // Интервал обновления прогресса
+    }, 70); // Интервал обновления прогресса
 }
 
 function startAnimationScan() {
@@ -536,8 +538,8 @@ $('.video-btn__start, .video-btn__stop').on('click', function() {
 
 function startCounter() {
     const digits = document.querySelectorAll('.digit');
-    const targetNumber = Math.floor(Math.random() * (150 - 50 + 1)) + 50; // Генерируем случайное число от 50 до 150
-    const duration = 10500; // Время анимации в миллисекундах
+    const targetNumber = Math.floor(Math.random() * (60 - 50 + 1)) + 50; // Генерируем случайное число от 50 до 150
+    const duration = 7500; // Время анимации в миллисекундах
     const stepTime = Math.abs(Math.floor(duration / targetNumber)); // Время на каждый шаг
 
     let currentNumber = 0;

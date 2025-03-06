@@ -269,7 +269,7 @@ textarea {
   width: 100%;
   bottom: 0;
   left: 0;
-  padding: 25px 20px;
+  padding: 20px 20px;
   background: #f8f8f8;
   z-index: 2;
 }
@@ -344,6 +344,12 @@ textarea {
   top: -100px;
   width: 257px;
   margin: 0 auto;
+}
+
+@media (max-width: 375px) {
+  .mobile-icon img{
+    top: -105px;
+  }
 }
 
 .title-pay span {
@@ -670,7 +676,6 @@ iframe {
 
 .scan-result__list{
   position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -680,7 +685,7 @@ iframe {
   background: #f9f9f9;
 }
 
-.scan-result__list-text{
+.scan-result__list-overlay{
   position: absolute;
   top: 0;
   left: 0;
@@ -689,12 +694,41 @@ iframe {
   justify-content: center;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(9px);
+  backdrop-filter: blur(6px);
   background: rgba(255, 255, 255, 0.1);
-  font-weight: 800;
-  font-size: 28px;
+  border-radius: 20px;
+}
+
+.scan-result__label{
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  transform: translateY(-50%);
+  width: calc(100% + 20px);
+  border: 1px solid #f8f8f8;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.21);
+  background: #fff;
+}
+
+.scan-result__label-text {
+  font-weight: 600;
+  font-size: 20px;
+  color: #110d38;
+  margin-bottom: 16px;
   text-align: center;
-  color: #242424;
+}
+
+.scan-result__label-text span{
+  color: #ff453a;
+}
+
+.scan-result__label .btn{
+  border-radius: 23px;
+  padding: 9px 12px;
+  font-size: 18px;
+  line-height: 133%;
 }
 
 .scan-result__el{
@@ -1507,7 +1541,7 @@ iframe {
 
 @media (max-width: 375px) {
   .tab-btn-scroll.tab-btn{
-    max-height: 200px;
+    max-height: 220px;
     padding-bottom: 50px;
     overflow: auto;
   }
@@ -1651,6 +1685,12 @@ iframe {
   height: 100%;
   background: #c6c6c8;
   transition: 1.3s;
+}
+
+.risk-line__bg svg{
+  position: absolute;
+  left: -4px;
+  top: 0;
 }
 
 .risk-line.active .risk-line__bg{
@@ -1800,7 +1840,7 @@ iframe {
   align-items: center;
   gap: 6px;
   height: 28px;
-  bottom: -14px;
+  bottom: -19px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 20px;
@@ -1811,8 +1851,6 @@ iframe {
   color: #fff;
   background: #4040c3;
 }
-
-
 
 .pay-button{
   height: 71px;
