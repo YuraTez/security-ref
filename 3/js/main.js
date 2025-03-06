@@ -379,10 +379,12 @@ function animateElement(index) {
 }
 
 function startAnimationScan() {
-    animateElement(currentIndex);
+    setTimeout(()=>{
+        animateElement(currentIndex);
+    },1500)
     setTimeout(()=>{
         startCounter()
-    },1500)
+    },3000)
 }
 
 function createUser(){
