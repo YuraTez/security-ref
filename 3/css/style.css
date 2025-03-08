@@ -2227,6 +2227,10 @@ iframe {
   margin-bottom: 8px;
 }
 
+.scan-popup__text span{
+  color: #ff453a;
+}
+
 .scan-popup__mes{
   display: flex;
   gap: 8px;
