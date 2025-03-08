@@ -2176,6 +2176,7 @@ iframe {
   align-items: flex-end;
   justify-content: center;
   flex-grow: 1;
+  padding-top: 44px;
 }
 
 .scan-popup{
