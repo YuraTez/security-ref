@@ -83,10 +83,11 @@ const timer = () => {
 
 // Переменная для отслеживания текущего таба
 let currentTab ;
+
 if(getCookie("userId")){
     $(".logo").addClass("hide")
     $(".tab-scan").addClass("d-none")
-    currentTab = 10
+    currentTab = 12
 
     setTimeout(()=>{
         $(".risk-line").addClass("active");
@@ -101,8 +102,8 @@ if(getCookie("userId")){
     currentTab = 0
 }
 
-$(".tab-start").one("click" ,()=>{
 
+/*$(".tab-start").on("click" , ()=>{
     $(".progress-bar").removeClass("hide");
     setTimeout(function (){
         $(".tab-start-page").removeClass("active show")
@@ -117,7 +118,8 @@ $(".tab-start").one("click" ,()=>{
     window.scrollTo(0, 0);
     currentTabProgressBar ()
     currentTab++
-})
+
+})*/
 
 function currentTabProgressBar (){
     setTimeout(function () {
@@ -130,10 +132,10 @@ function currentTabProgressBar (){
             changeThemeColor('#fff');
             body.classList.remove('purple-body')
         }
-        if (currentTab < 8) {
+        if (currentTab < 10) {
             // Обновляем прогресс-бар
             progressBarElements.forEach((el, index) => {
-                if (index < currentTab ) {
+                if (index < currentTab + 1 ) {
                     el.classList.add('done');
                 } else {
                     el.classList.remove('done');
@@ -141,10 +143,10 @@ function currentTabProgressBar (){
             });
 
             // Обновляем отображение количества пройденных табов
-            progressNum.textContent = currentTab  ;
+            progressNum.textContent = currentTab + 1 ;
 
             // Управляем видимостью кнопки "Назад"
-            if (currentTab < 2) {
+            if (!currentTab) {
                 progressBar.classList.add('start');
                 backButton.classList.add('d-none'); // Скрываем кнопку на первом табе
             } else {
@@ -167,7 +169,7 @@ function updateProgress() {
         }
     }
 
-    if(currentTab  > 0 && tabs[currentTab].getAttribute("data-tab") === "email"){
+    if(currentTab  > 0 && tabs[currentTab - 1].getAttribute("data-tab") === "email"){
        setTimeout(()=>{
            $(".logo").addClass("hide");
        },300)
@@ -219,6 +221,39 @@ function logView(data) {
     amplitude.logEvent(data);
 }
 
+
+// Обработчик события для кнопок "next"
+nextButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Проверяем, не достигли ли мы последнего таба
+        if (currentTab < tabs.length - 1) {
+            if(currentTab > 0 && tabs[currentTab - 1].getAttribute("data-tab") === "5"){
+                if(!$(".checkbox-list__input:checked").length){
+                    $('.error-checkbox').addClass("show");
+                    setTimeout(()=>{
+                        $('.error-checkbox').removeClass("show");
+                    },2000)
+                    return
+                }
+            }
+            currentTab++;
+            updateProgress();
+            backButton.classList.remove('d-none');
+            progressBar.classList.remove('start');
+        } else {
+            updateProgress();
+            currentTab++;
+        }
+        let dataCurrentTab = tabs[currentTab].getAttribute("data-tab")
+        if (dataCurrentTab === "email") {
+            logView(objEventAmplitude[dataCurrentTab])
+        }else if(objEventAmplitude[dataCurrentTab] !== undefined){
+            logView(objEventAmplitude[dataCurrentTab])
+        }
+
+    });
+});
+
 $(".input-email").on("focus" , ()=>{
     logView(objEventAmplitude["mailFocus"])
 })
@@ -265,63 +300,6 @@ function changeThemeColor(color) {
     }
 }
 
-function disableBtn(container){
-    let list = container.querySelectorAll(".btn")
-    list.forEach((el)=>{
-        el.classList.add("disabled")
-    })
-
-    setTimeout(()=>{
-        list.forEach((el)=>{
-            el.classList.remove("disabled")
-        })
-    },3000)
-}
-
-// Обработчик события для кнопок "next"
-nextButtons.forEach(button => {
-    button.addEventListener('click', function () {
-        if(this.classList.contains("disabled")){
-            return
-        }
-
-        if(currentTab < 8){
-            disableBtn(this.closest(".tab-btn"))
-        }
-
-        // Проверяем, не достигли ли мы последнего таба
-        if (currentTab < tabs.length - 1) {
-            if(currentTab > 0 && tabs[currentTab].getAttribute("data-name") === "checkbox"){
-                const tabContainer = tabs[currentTab];
-                const flag = tabContainer.querySelector(".checkbox-list__input:checked");
-                const checkboxState = tabContainer.querySelector(".error-checkbox")
-                if(!flag){
-                    checkboxState.classList.add("show");
-                    setTimeout(()=>{
-                        checkboxState.classList.remove("show");
-                    },2000)
-                    return
-                }
-            }
-
-            currentTab++;
-            updateProgress();
-            backButton.classList.remove('d-none');
-            progressBar.classList.remove('start');
-        } else {
-            updateProgress();
-            currentTab++;
-        }
-        let dataCurrentTab = tabs[currentTab].getAttribute("data-tab")
-        if (dataCurrentTab === "email") {
-            logView(objEventAmplitude[dataCurrentTab])
-        }else if(objEventAmplitude[dataCurrentTab] !== undefined){
-            logView(objEventAmplitude[dataCurrentTab])
-        }
-
-    });
-});
-
 $(".btn").on("click" , function (){
     let btnList = $(this).parent().find(".btn");
     $.each(btnList, function(index, el) {
@@ -336,8 +314,18 @@ let currentIndex = 0;
 function animateElement(index) {
     if (index >= elements.length){
         setTimeout(()=>{
-            $(".scan-popup").addClass("active");
+            $(".tab-scan").removeClass("z-index")
+            $(".tab-scan").addClass("d-none")
+
+            timer()
+
+            slider(".info-slider")
+
+            $(".risk-line").addClass("active");
+
         },1500)
+        currentTab++;
+        updateProgress();
         return;
     }
 
@@ -398,22 +386,6 @@ function startAnimationScan() {
         startCounter()
     },3000)
 }
-
-$(".scan-popup__btn").on("click" , ()=>{
-    setTimeout(()=>{
-        $(".tab-scan").removeClass("z-index")
-        $(".tab-scan").addClass("d-none")
-
-        timer()
-
-        slider(".info-slider")
-
-        $(".risk-line").addClass("active");
-
-    },500)
-    currentTab++;
-    updateProgress();
-})
 
 function createUser(){
     const link = new URL(window.location.href);
@@ -593,10 +565,3 @@ function updateDigits(number) {
         span.textContent = digit; // Обновляем цифру
     });
 }
-
-/*
-
-window.addEventListener('beforeunload', function(event) {
-    event.preventDefault();
-    alert("stop dengeras")
-});*/
