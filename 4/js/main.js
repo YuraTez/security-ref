@@ -83,25 +83,35 @@ const timer = () => {
 
 // Переменная для отслеживания текущего таба
 let currentTab ;
-if(getCookie("userId")){
+
+
+if(getCookie("successPay")){
+    $(".progress-bar").hide()
     $(".logo").addClass("hide")
     $(".tab-scan").addClass("d-none")
-    currentTab = 10
+    $(".tab-success").addClass("active show")
+
+}else if(getCookie("userId")){
+    $(".logo").addClass("hide")
+    $(".tab-scan").addClass("d-none")
+    currentTab = 9
 
     setTimeout(()=>{
         $(".risk-line").addClass("active");
     },1000)
 
     timer()
-
+    userDay()
     slider(".info-slider")
 
     window.scrollTo(0, 0);
-}else{
+    updateProgress();
+} else{
     currentTab = 0
+    updateProgress();
 }
 
-$(".tab-start").one("click" ,()=>{
+/*$(".tab-start").one("click" ,()=>{
 
     $(".progress-bar").removeClass("hide");
     setTimeout(function (){
@@ -117,7 +127,7 @@ $(".tab-start").one("click" ,()=>{
     window.scrollTo(0, 0);
     currentTabProgressBar ()
     currentTab++
-})
+})*/
 
 function currentTabProgressBar (){
     setTimeout(function () {
@@ -130,10 +140,10 @@ function currentTabProgressBar (){
             changeThemeColor('#fff');
             body.classList.remove('purple-body')
         }
-        if (currentTab < 8) {
+        if (currentTab < 7) {
             // Обновляем прогресс-бар
             progressBarElements.forEach((el, index) => {
-                if (index < currentTab ) {
+                if (index < currentTab + 1 ) {
                     el.classList.add('done');
                 } else {
                     el.classList.remove('done');
@@ -141,10 +151,10 @@ function currentTabProgressBar (){
             });
 
             // Обновляем отображение количества пройденных табов
-            progressNum.textContent = currentTab  ;
+            progressNum.textContent = currentTab + 1  ;
 
             // Управляем видимостью кнопки "Назад"
-            if (currentTab < 2) {
+            if (!currentTab) {
                 progressBar.classList.add('start');
                 backButton.classList.add('d-none'); // Скрываем кнопку на первом табе
             } else {
@@ -251,8 +261,6 @@ $(".tab-pay .back-tab").on("click" , function (){
     updateProgress();
 })
 
-// Инициализация
-updateProgress();
 
 // Функция для изменения цвета темы
 function changeThemeColor(color) {
@@ -405,7 +413,7 @@ $(".scan-popup__btn").on("click" , ()=>{
         $(".tab-scan").addClass("d-none")
 
         timer()
-
+        userDay()
         slider(".info-slider")
 
         $(".risk-line").addClass("active");
@@ -490,7 +498,7 @@ $("#openScan").on("click", () => {
 })
 
 
-$(".btn--time").on("click" , ()=>{
+$(".btn-ampletude").on("click" , ()=>{
     logView(objEventAmplitude["protectClick"])
 })
 
@@ -594,6 +602,12 @@ function updateDigits(number) {
     });
 }
 
+function userDay(){
+    setInterval(()=>{
+        let content = +$(".user-today span").text() + 1
+        $(".user-today span").text(content)
+    },4000)
+}
 /*
 
 window.addEventListener('beforeunload', function(event) {

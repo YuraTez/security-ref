@@ -623,12 +623,23 @@ iframe {
   justify-content: space-between;
   top: 0;
   left: 0;
-  margin-left: -20px;
-  width: calc(100% + 40px);
+  width: 100%;
   padding: 12px 20px;
   border-top: 1px solid #c6c6c8;
   background: #f2f2fa;
   z-index: 10;
+}
+
+.time:before{
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: calc(100% + 40px);
+  background: #f2f2fa;
+  border-top: 1px solid #c6c6c8;
+  left: -20px;
+  top: 0;
+  z-index: -1;
 }
 
 .time-content {
@@ -2276,7 +2287,20 @@ iframe {
   min-width: initial;
 }
 
+.user-today{
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 143%;
+  color: #242424;
+  opacity: 0.8;
+}
 
+.user-today span{
+  font-weight: 600;
+}
 
 
 

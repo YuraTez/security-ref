@@ -165,6 +165,7 @@ function postData(){
 
             formPay.on('success', e => {
                setTimeout(function (){
+                   setCookie('successPay', "true", 90);
                    $(".tab").removeClass("active show");
                    $(".tab-success").addClass("active show")
                    amplitude.logEvent('purchase_success');

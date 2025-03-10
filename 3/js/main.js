@@ -84,7 +84,13 @@ const timer = () => {
 // Переменная для отслеживания текущего таба
 let currentTab ;
 
-if(getCookie("userId")){
+
+if(getCookie("successPay")){
+    $(".progress-bar").hide()
+    $(".logo").addClass("hide")
+    $(".tab-scan").addClass("d-none")
+    $(".tab-success").addClass("active show")
+}else if(getCookie("userId")){
     $(".logo").addClass("hide")
     $(".tab-scan").addClass("d-none")
     currentTab = 12
@@ -98,8 +104,10 @@ if(getCookie("userId")){
     slider(".info-slider")
 
     window.scrollTo(0, 0);
+    updateProgress();
 }else{
     currentTab = 0
+    updateProgress();
 }
 
 
@@ -307,9 +315,6 @@ $(".tab-pay .back-tab").on("click" , function (){
     updateProgress();
 })
 
-// Инициализация
-updateProgress();
-
 // Функция для изменения цвета темы
 function changeThemeColor(color) {
     // Находим мета-тег с именем theme-color
@@ -483,7 +488,7 @@ $("#openScan").on("click", () => {
 })
 
 
-$(".btn--time").on("click" , ()=>{
+$(".btn-ampletude").on("click" , ()=>{
     logView(objEventAmplitude["protectClick"])
 })
 
