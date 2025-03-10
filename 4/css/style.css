@@ -548,7 +548,8 @@ iframe {
 
 .input-email {
   width: 100%;
-  padding: 18px 24px;
+  height: 60px;
+  padding: 0 24px;
   font-weight: 400;
   font-size: 16px;
   color: rgba(0, 0, 0, 0.55);
@@ -2267,7 +2268,9 @@ iframe {
   font-weight: 600;
 }
 
-
+.flat{
+  min-width: initial;
+}
 
 
 
