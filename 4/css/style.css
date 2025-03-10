@@ -15,7 +15,7 @@
 }
 
 body{
-  zoom: 0.5;
+  zoom: 0.8;
 }
 
 body,html {
@@ -414,6 +414,7 @@ textarea {
 iframe {
   width: 100%;
   max-width: 100%;
+  zoom: 0.8;
 }
 
 .subtitle {
