@@ -112,6 +112,9 @@ function postData(){
                         width: "100%",
                         maxWidth: "100%",
                         border: "none",
+                    },
+                    flat: {
+                        minWidth: "initial"
                     }
                 }
             }
