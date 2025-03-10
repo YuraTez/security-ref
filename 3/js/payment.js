@@ -95,7 +95,8 @@ function postData(){
 
                 styles: {
                     form_body:{
-                      "width": "100%"
+                        "width": "100%",
+                        "min-width": "initial"
                     },
                     submit_button: {
                         'background-color': '#4040c3;',
@@ -112,7 +113,7 @@ function postData(){
                         width: "100%",
                         maxWidth: "100%",
                         border: "none",
-                    }
+                    },
                 }
             }
 
@@ -144,7 +145,7 @@ function postData(){
 
                     if(key === "cardNumber" && field.isValid && cardNumber){
                         amplitude.logEvent('card_field_fill');
-                       return  cardNumber = false
+                        return  cardNumber = false
                     }
 
                     if(key === "cardExpiryDate" && field.isValid && cardExpiryDate){
@@ -152,23 +153,23 @@ function postData(){
                         amplitude.logEvent('expire_fill');
                         return  cardExpiryDate = false
                     }
-                    
+
                     if(key === "cardCvv" && field.isValid && cardCvv){
                         console.log(data)
                         amplitude.logEvent('cvv_fill');
                         return  cardCvv = false
                     }
-                    
+
                 });
             })
 
             formPay.on('success', e => {
-               setTimeout(function (){
-                   $(".tab").removeClass("active show");
-                   $(".tab-success").addClass("active show")
-                   amplitude.logEvent('purchase_success');
-                   amplitude.logEvent('success_view');
-               },1000)
+                setTimeout(function (){
+                    $(".tab").removeClass("active show");
+                    $(".tab-success").addClass("active show")
+                    amplitude.logEvent('purchase_success');
+                    amplitude.logEvent('success_view');
+                },1000)
             })
 
             formPay.on('fail', e => {
@@ -190,7 +191,7 @@ payButton.forEach((el)=>{
     el.addEventListener('click', function (){
         if(this.classList.contains("btn-error-pay")){
             $(".tab").removeClass("active show");
-           setTimeout(function (){
+            setTimeout(function (){
                 $(".tab-pay").addClass("active show")
             },1000)
         }

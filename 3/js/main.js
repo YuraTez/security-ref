@@ -221,10 +221,31 @@ function logView(data) {
     amplitude.logEvent(data);
 }
 
+function disableBtn(container){
+    let list = container.querySelectorAll(".btn")
+    list.forEach((el)=>{
+        el.classList.add("disabled")
+    })
+
+    setTimeout(()=>{
+        list.forEach((el)=>{
+            el.classList.remove("disabled")
+        })
+    },3000)
+}
 
 // Обработчик события для кнопок "next"
 nextButtons.forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', function () {
+
+        if(this.classList.contains("disabled")){
+            return
+        }
+
+        if(currentTab < 10){
+            disableBtn(this.closest(".tab-btn"))
+        }
+
         // Проверяем, не достигли ли мы последнего таба
         if (currentTab < tabs.length - 1) {
             if(currentTab > 0 && tabs[currentTab - 1].getAttribute("data-tab") === "5"){
