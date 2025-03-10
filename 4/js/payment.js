@@ -95,7 +95,8 @@ function postData(){
 
                 styles: {
                     form_body:{
-                      "width": "100%"
+                      "width": "100%",
+                      "min-width": "initial"
                     },
                     submit_button: {
                         'background-color': '#4040c3;',
@@ -113,9 +114,6 @@ function postData(){
                         maxWidth: "100%",
                         border: "none",
                     },
-                    flat: {
-                        minWidth: "initial"
-                    }
                 }
             }
 
