@@ -414,6 +414,7 @@ textarea {
 iframe {
   width: 100%;
   height: initial !important;
+  min-height: 410px;
   max-width: 100%;
   zoom: 0.8;
 }
