@@ -432,7 +432,7 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   gap: 9px;
-  height: 75vh;
+  height: 55vh;
   padding-bottom: 30px;
   overflow: auto;
 }
@@ -1722,7 +1722,8 @@ iframe {
 
 .risk-line__bg svg{
   position: absolute;
-  left: -7px;
+  height: 100%;
+  left: -8px;
   top: 0;
 }
 
@@ -1828,7 +1829,7 @@ iframe {
 
 @media (min-width: 450px) {
   .checkbox-list{
-    height: 51vh;
+    height: 40vh;
   }
 
   .tab-overlay{
