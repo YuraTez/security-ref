@@ -1,11 +1,3 @@
-window.addEventListener('load', function() {
-    if (window.location.hash) {
-        setTimeout(function() {
-            history.replaceState(null, null, ' ');
-        }, 0);
-    }
-});
-
 const checkInterval = 100;
 const maxAttempts = 50;
 
@@ -599,3 +591,22 @@ function updateDigits(number) {
         span.textContent = digit; // Обновляем цифру
     });
 }
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(event) {
+        event.preventDefault(); // Отменяем стандартное поведение ссылки
+
+        const targetId = this.getAttribute('href'); // Получаем ID якоря
+        const targetElement = document.querySelector(targetId); // Находим элемент по ID
+
+        if (targetElement) {
+            // Прокручиваем к элементу
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+
+            // Удаляем якорь из URL после задержки
+            setTimeout(() => {
+                history.replaceState(null, null, ' '); // Удаляем якорь
+            }, 500);
+        }
+    });
+});
