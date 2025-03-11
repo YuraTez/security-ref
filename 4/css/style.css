@@ -134,6 +134,7 @@ textarea {
   padding-top: 70px;
   opacity: 0;
   transition: 0.5s;
+  height: 105vh;
 }
 
 .tab.active {
@@ -431,7 +432,7 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   gap: 9px;
-  height: 36vh;
+  height: 75vh;
   padding-bottom: 30px;
   overflow: auto;
 }
@@ -542,10 +543,12 @@ iframe {
   text-align: center;
   transition: .3s;
   opacity: 0;
+  z-index: -1;
 }
 
 #error.show{
   opacity: 1;
+  z-index: initial;
 }
 
 .input-email {
@@ -625,7 +628,6 @@ iframe {
   left: 0;
   width: 100%;
   padding: 12px 20px;
-  border-top: 1px solid #c6c6c8;
   background: #f2f2fa;
   z-index: 10;
 }
@@ -1720,7 +1722,7 @@ iframe {
 
 .risk-line__bg svg{
   position: absolute;
-  left: -5px;
+  left: -7px;
   top: 0;
 }
 

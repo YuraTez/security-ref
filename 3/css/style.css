@@ -429,7 +429,7 @@ iframe {
   display: flex;
   flex-direction: column;
   gap: 9px;
-  height: 36vh;
+  height: 65vh;
   padding-bottom: 30px;
   overflow: auto;
 }
@@ -530,10 +530,12 @@ iframe {
   text-align: center;
   transition: .3s;
   opacity: 0;
+  z-index: -1;
 }
 
 #error.show{
   opacity: 1;
+  z-index: initial;
 }
 
 .input-email {
@@ -1560,7 +1562,6 @@ iframe {
 
 @media (max-width: 375px) {
   .tab-btn-scroll.tab-btn{
-    max-height: 220px;
     padding-bottom: 50px;
     overflow: auto;
   }
@@ -1814,7 +1815,7 @@ iframe {
 
 @media (min-width: 450px) {
   .checkbox-list{
-    height: 51vh;
+    height: 65vh;
   }
 
   .tab-overlay{
