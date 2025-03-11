@@ -627,7 +627,7 @@ iframe {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 12px 20px;
+  padding: 12px 0;
   background: #f2f2fa;
   z-index: 10;
 }

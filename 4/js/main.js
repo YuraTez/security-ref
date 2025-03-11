@@ -1,3 +1,9 @@
+window.addEventListener('load', function() {
+    if (window.location.hash) {
+        history.replaceState(null, null, ' ');
+    }
+});
+
 const checkInterval = 100;
 const maxAttempts = 50;
 
