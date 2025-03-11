@@ -1,6 +1,8 @@
 window.addEventListener('load', function() {
     if (window.location.hash) {
-        history.replaceState(null, null, ' ');
+        setTimeout(function() {
+            history.replaceState(null, null, ' ');
+        }, 0);
     }
 });
 
