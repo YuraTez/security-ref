@@ -432,7 +432,7 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   gap: 9px;
-  height: 55vh;
+  height: 48vh;
   padding-bottom: 30px;
   overflow: auto;
 }
@@ -1828,10 +1828,6 @@ iframe {
 }
 
 @media (min-width: 450px) {
-  .checkbox-list{
-    height: 40vh;
-  }
-
   .tab-overlay{
    height: 354px;
   }
