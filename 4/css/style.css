@@ -896,7 +896,7 @@ iframe {
 }
 
 .info-slider__el-video{
-  height: 339px;
+  height: 445px;
   background: #f9f9f9;
   border: 1px solid rgba(17, 13, 56, 0.05);
   border-radius: 11px;
@@ -1149,6 +1149,7 @@ iframe {
 .order-time {
   position: relative;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 8px;
   margin: 40px 0 32px;
@@ -1159,6 +1160,40 @@ iframe {
   font-weight: 700;
   font-size: 16px;
   color: #110d38;
+}
+
+.order-time__label{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: -13px;
+  right: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  color: #110d38;
+  border-radius: 12px;
+  height: 27px;
+  background: #fe0;
+  padding: 0 10px;
+}
+
+.order-time__content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.order-time__content-text {
+  max-width: 120px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.order-time__price-time{
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .security-info {
@@ -1195,6 +1230,12 @@ iframe {
   padding: 16px 14px;
 }
 
+.money-back__icon{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
 .money-back__title {
   font-weight: 700;
   font-size: 16px;
@@ -1207,12 +1248,6 @@ iframe {
   text-align: center;
   color: rgba(0, 0, 0, 0.55);
   margin-top: 10px;
-}
-
-.money-back__icon {
-  position: absolute;
-  right: 21px;
-  bottom: -25px;
 }
 
 .logos {
@@ -1304,23 +1339,35 @@ iframe {
 
 .footer-title{
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 8px;
   margin-bottom: 20px;
   font-weight: 700;
-  font-size: 13px;
   color: #242424;
 }
 
-.footer-text{
+.footer-title__text{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-title__text-icon{
+  flex-shrink: 0;
+}
+
+.footer-title__text-content{
+  font-size: 12px;
+}
+
+.footer-title__text-content{
   font-weight: 400;
-  font-size: 14px;
-  letter-spacing: 0;
-  text-align: justify;
-  line-height: 138%;
-  color: rgba(0, 0, 0, 0.55);
-  margin-bottom: 25px;
+  font-size: 12px;
+}
+
+.footer-title__icon{
+  display: flex;
 }
 
 .footer-slogan{
