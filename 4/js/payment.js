@@ -91,11 +91,14 @@ function postData(){
                     width: "100%",
                     responsive: true,
                     applePayButtonParams: {
-                        enabled: false,
-                        containerId: 'solid-payment-apple-pay',
-                        color: 'white-outline',
-                        type: 'check-out'
-                    }
+                        merchantIdentifier: 'merchant.com.onlineshield.app', // Ваш merchantIdentifier
+                        countryCode: 'US', // Код страны
+                        currencyCode: 'USD', // Код валюты
+                        total: {
+                            label: 'Your Company Name', // Название вашей компании
+                            amount: '10.00' // Сумма платежа
+                        }
+                    },
                 },
 
                 styles: {
