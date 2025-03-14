@@ -132,9 +132,14 @@ function postData(){
             let cardCvv = true
             let cardExpiryDate = true
 
+            form.on('submit', e => {
+                const data = e.data // SubmitMessage
+                console.log('submit' , data)
+            })
+
+
             formPay.on('interaction', e => {
                 const data = e.data // InteractionMessage
-console.log('interaction' , data)
                 if(data.target.type === "button"){
                     amplitude.logEvent('purchase_intent');
                     const fieldValues = Object.values(data.cardForm.fields);
