@@ -132,7 +132,7 @@ function postData(){
             let cardCvv = true
             let cardExpiryDate = true
 
-            form.on('submit', e => {
+            formPay('submit', e => {
                 const data = e.data // SubmitMessage
                 console.log('submit' , data)
             })
