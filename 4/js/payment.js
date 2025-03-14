@@ -134,7 +134,7 @@ function postData(){
 
             formPay.on('interaction', e => {
                 const data = e.data // InteractionMessage
-
+console.log('interaction' , data)
                 if(data.target.type === "button"){
                     amplitude.logEvent('purchase_intent');
                     const fieldValues = Object.values(data.cardForm.fields);
@@ -169,8 +169,6 @@ function postData(){
             })
 
             formPay.on('success', e => {
-                let successData = e.data;
-                console.log('successData' , successData)
                setTimeout(function (){
                    setCookie('successPay', "true", 90);
                    $(".tab").removeClass("active show");
