@@ -711,6 +711,8 @@ iframe {
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  min-height: 326px;
   gap: 12px;
   border: 1px solid rgba(17, 13, 56, 0.05);
   border-radius: 20px;
@@ -746,10 +748,11 @@ iframe {
 }
 
 .scan-result__label-text {
+  max-width: 320px;
   font-weight: 600;
   font-size: 20px;
   color: #110d38;
-  margin-bottom: 16px;
+  margin: 0 auto 16px;
   text-align: center;
 }
 
@@ -2265,6 +2268,7 @@ iframe {
   top: 50%;
   left: 50%;
   width: calc(100% - 40px);
+  max-width: 320px;
   transform: translate(-50% , -50%);
   border-radius: 14px;
   background: #d7d7d7;
