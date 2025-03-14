@@ -178,7 +178,8 @@ function postData(){
             })
 
             formPay.on('fail', e => {
-                console.log('fail' , e.data)
+                console.log('fail' , e.data.entity)
+                console.log(e.data.entity === "form")
                 $(".tab").removeClass("active show");
                 $(".tab-error-pay").addClass("active show")
                 amplitude.logEvent('purchase_fail');
