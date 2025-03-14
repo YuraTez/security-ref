@@ -1653,3 +1653,6 @@ iframe {
   }
 }
 
+#payment-buttons{
+  width: 100% !important;
+}

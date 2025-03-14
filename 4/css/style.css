@@ -2348,5 +2348,7 @@ iframe {
   font-weight: 600;
 }
 
-
+#payment-buttons{
+  width: 100% !important;
+}
 

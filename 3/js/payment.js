@@ -90,7 +90,12 @@ function postData(){
                     autoFocus: false,
                     width: "100%",
                     responsive: true,
-                    applePayButtonParams: true,
+                    applePayButtonParams: {
+                        enabled: true,
+                        containerId: 'solid-payment-apple-pay',
+                        color: 'white-outline',
+                        type: 'check-out'
+                    }
                 },
 
                 styles: {

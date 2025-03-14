@@ -2215,3 +2215,6 @@ iframe {
   min-width: initial;
 }
 
+#payment-buttons{
+  width: 100% !important;
+}

@@ -91,14 +91,11 @@ function postData(){
                     width: "100%",
                     responsive: true,
                     applePayButtonParams: {
-                        merchantIdentifier: 'merchant.com.onlineshield.app', // Ваш merchantIdentifier
-                        countryCode: 'US', // Код страны
-                        currencyCode: 'USD', // Код валюты
-                        total: {
-                            label: 'Your Company Name', // Название вашей компании
-                            amount: '10.00' // Сумма платежа
-                        }
-                    },
+                        enabled: true,
+                        containerId: 'solid-payment-apple-pay',
+                        color: 'white-outline',
+                        type: 'check-out'
+                    }
                 },
 
                 styles: {
@@ -172,6 +169,8 @@ function postData(){
             })
 
             formPay.on('success', e => {
+                let successData = e.data;
+                console.log('successData' , successData)
                setTimeout(function (){
                    setCookie('successPay', "true", 90);
                    $(".tab").removeClass("active show");

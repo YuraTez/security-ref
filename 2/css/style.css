@@ -1940,3 +1940,7 @@ height: 71px;
     padding: 65px 25px 23px;
   }
 }
+
+#payment-buttons{
+  width: 100% !important;
+}
