@@ -132,12 +132,6 @@ function postData(){
             let cardCvv = true
             let cardExpiryDate = true
 
-            formPay.on('submit', e => {
-                const data = e.data // SubmitMessage
-                console.log('submit' , data)
-            })
-
-
             formPay.on('interaction', e => {
                 const data = e.data // InteractionMessage
                 if(data.target.type === "button"){
@@ -184,6 +178,7 @@ function postData(){
             })
 
             formPay.on('fail', e => {
+                console.log('fail' , e.data)
                 $(".tab").removeClass("active show");
                 $(".tab-error-pay").addClass("active show")
                 amplitude.logEvent('purchase_fail');
