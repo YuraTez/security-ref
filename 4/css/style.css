@@ -714,10 +714,6 @@ iframe {
   justify-content: space-between;
   min-height: 326px;
   gap: 12px;
-  border: 1px solid rgba(17, 13, 56, 0.05);
-  border-radius: 20px;
-  padding: 14px;
-  background: #f9f9f9;
 }
 
 .scan-result__list-overlay{
@@ -730,7 +726,6 @@ iframe {
   width: 100%;
   height: 100%;
   backdrop-filter: blur(6px);
-  background: rgba(255, 255, 255, 0.1);
   border-radius: 20px;
 }
 
@@ -2356,3 +2351,55 @@ iframe {
   width: 100% !important;
 }
 
+.scan-result-content{
+  background: #f9f9f9;
+  border: 1px solid rgba(17, 13, 56, 0.05);
+  border-radius: 20px;
+  padding: 14px;
+}
+
+.ip-data{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 9px;
+}
+
+.ip-data__el{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  background: #f2f2f2;
+  border-radius: 12px;
+}
+
+.ip-data__el-name{
+  font-weight: 500;
+  font-size: 16px;
+  color:  #110d38;
+}
+
+.ip-data__el-info{
+  position: relative;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 143%;
+  text-align: right;
+  color:  #110d38;
+}
+
+.ip-data__el-info.ip-data__el-info--accent{
+  color: #ff453a;
+}
+
+.ip-data__el-info.blur:before{
+  position: absolute;
+  content: "";
+  left: -5%;
+  width: 110%;
+  height: 110%;
+  backdrop-filter: blur(3px);
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}

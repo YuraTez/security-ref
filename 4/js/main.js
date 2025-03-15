@@ -92,6 +92,7 @@ if(getCookie("successPay")){
     $(".tab-success").addClass("active show")
 
 }else if(getCookie("userId")){
+    getDataUser()
     $(".logo").addClass("hide")
     $(".tab-scan").addClass("d-none")
     currentTab = 9
@@ -411,7 +412,7 @@ $(".scan-popup__btn").on("click" , ()=>{
     setTimeout(()=>{
         $(".tab-scan").removeClass("z-index")
         $(".tab-scan").addClass("d-none")
-
+        getDataUser()
         timer()
         userDay()
         slider(".info-slider")
@@ -646,3 +647,33 @@ window.addEventListener('beforeunload', function(event) {
     event.preventDefault();
     alert("stop dengeras")
 });*/
+
+function getDataUser(){
+    async function getIP() {
+        const res = await fetch('https://checkip.amazonaws.com/');
+        const data = await res.text();
+        return data.trim();
+    }
+
+    async function geiInfoUser () {
+        const ipUser  = await getIP(); // Получаем IP-адрес
+
+        const request = `https://ipinfo.io/${ipUser }?token=486cbb5d497cdc`;
+
+        fetch(request)
+            .then(response => response.json())
+            .then(data => addDataUser(data))
+            .catch(error => console.error('Ошибка:', error));
+    }
+
+    function addDataUser(data){
+        $("#ipUser").text(data.ip)
+        $("#userProvider").text(data["company"].name)
+        $("#userCity").text(data.city)
+    }
+
+    geiInfoUser ();
+}
+
+
+

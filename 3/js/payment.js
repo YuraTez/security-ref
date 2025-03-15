@@ -126,6 +126,9 @@ function postData(){
 
             formPay.on('mounted', e => {
                 amplitude.logEvent('frame_loading_finished');
+                if(e.data.entity === "applebtn"){
+                    amplitude.logEvent('apple_pay_intent');
+                }
             })
 
             let cardNumber = true
@@ -173,7 +176,13 @@ function postData(){
                     setCookie('successPay', "true", 90);
                     $(".tab").removeClass("active show");
                     $(".tab-success").addClass("active show")
-                    amplitude.logEvent('purchase_success');
+
+                    if(e.data.entity === "applebtn"){
+                        amplitude.logEvent('apple_pay_success');
+                    }else{
+                        amplitude.logEvent('purchase_success');
+                    }
+
                     amplitude.logEvent('success_view');
                 },1000)
             })
@@ -181,7 +190,12 @@ function postData(){
             formPay.on('fail', e => {
                 $(".tab").removeClass("active show");
                 $(".tab-error-pay").addClass("active show")
-                amplitude.logEvent('purchase_fail');
+
+                if(e.data.entity === "applebtn"){
+                    amplitude.logEvent('apple_pay_fail');
+                }else{
+                    amplitude.logEvent('purchase_fail');
+                }
             })
         })
         .catch((error) => {

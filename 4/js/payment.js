@@ -126,6 +126,9 @@ function postData(){
 
             formPay.on('mounted', e => {
                 amplitude.logEvent('frame_loading_finished');
+                if(e.data.entity === "applebtn"){
+                    amplitude.logEvent('apple_pay_intent');
+                }
             })
 
             let cardNumber = true
@@ -153,13 +156,11 @@ function postData(){
                     }
 
                     if(key === "cardExpiryDate" && field.isValid && cardExpiryDate){
-                        console.log(data)
                         amplitude.logEvent('expire_fill');
                         return  cardExpiryDate = false
                     }
                     
                     if(key === "cardCvv" && field.isValid && cardCvv){
-                        console.log(data)
                         amplitude.logEvent('cvv_fill');
                         return  cardCvv = false
                     }
@@ -172,17 +173,25 @@ function postData(){
                    setCookie('successPay', "true", 90);
                    $(".tab").removeClass("active show");
                    $(".tab-success").addClass("active show")
-                   amplitude.logEvent('purchase_success');
+
+                   if(e.data.entity === "applebtn"){
+                       amplitude.logEvent('apple_pay_success');
+                   }else{
+                       amplitude.logEvent('purchase_success');
+                   }
+
                    amplitude.logEvent('success_view');
                },1000)
             })
 
             formPay.on('fail', e => {
-                console.log('fail' , e.data.entity)
-                console.log(e.data.entity === "form")
                 $(".tab").removeClass("active show");
                 $(".tab-error-pay").addClass("active show")
-                amplitude.logEvent('purchase_fail');
+                if(e.data.entity === "applebtn"){
+                    amplitude.logEvent('apple_pay_fail');
+                }else{
+                    amplitude.logEvent('purchase_fail');
+                }
             })
         })
         .catch((error) => {
