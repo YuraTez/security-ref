@@ -669,7 +669,7 @@ function getDataUser(){
     function addDataUser(data){
         $("#ipUser").text(data.ip)
         $("#userProvider").text(data["company"].name)
-        $("#userCity").text(data.city)
+        $("#userCity").text(data.country)
     }
 
     geiInfoUser ();
