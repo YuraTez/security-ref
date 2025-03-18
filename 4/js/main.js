@@ -290,10 +290,11 @@ function disableBtn(container){
 // Обработчик события для кнопок "next"
 nextButtons.forEach(button => {
     button.addEventListener('click', function () {
+        console.log('this' , this)
         if(this.classList.contains("disabled")){
             return
         }
-
+console.log('2')
         if(currentTab < 8){
             disableBtn(this.closest(".tab-btn"))
         }
@@ -408,7 +409,8 @@ function startAnimationScan() {
     },3000)
 }
 
-$(".scan-popup__btn").on("click" , ()=>{
+$("#openInfo-js").on("click" , ()=>{
+    logView(objEventAmplitude["pop_click"])
     setTimeout(()=>{
         $(".tab-scan").removeClass("z-index")
         $(".tab-scan").addClass("d-none")
@@ -422,6 +424,7 @@ $(".scan-popup__btn").on("click" , ()=>{
     },500)
     currentTab++;
     updateProgress();
+    $("#openInfo-js").off("click");
 })
 
 function createUser(){
@@ -669,7 +672,7 @@ function getDataUser(){
     function addDataUser(data){
         $("#ipUser").text(data.ip)
         $("#userProvider").text(data["company"].name)
-        $("#userCity").text(data.country)
+        $("#userCity").text(data.city)
     }
 
     geiInfoUser ();

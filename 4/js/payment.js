@@ -47,7 +47,7 @@ function postData(){
     }
     const data = {
         "order_id": generateUUIDString(),
-        "product_id" : "0598d54b-7240-4c67-913a-ab188240c14a",
+        "product_id" : "0890481c-38af-4317-a509-37960be9d085",
         "order_description": "Premium package",
         "customer_account_id" : clickId ,
         "product_price_id": "625915e8-9830-45b8-b75e-5953fd589c9e",
@@ -211,7 +211,11 @@ payButton.forEach((el)=>{
                 $(".tab-pay").addClass("active show")
             },1000)
         }
+
         postData()
+        setTimeout(()=>{
+            disableBtn(this.closest(".tab-btn"))
+        },0)
     });
 })
 
