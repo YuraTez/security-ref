@@ -219,3 +219,13 @@ body,html {
   justify-content: center;
   margin-bottom: 40px;
 }
+
+.popup--success .btn-fixed{
+  position: static;
+  width: 100%;
+  margin-top: 20px ;
+}
+
+.popup--success .popup-content{
+  padding: 40px 0;
+}

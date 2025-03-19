@@ -47,7 +47,7 @@ function sendResetPassword(){
             }
             // Получаем данные из ответа
             console.log('Success:');
-            $(".popup").addClass("show")
+            $(".popup--success").addClass("show")
         } catch (error) {
             console.error('Error:', error);
         }
@@ -60,7 +60,6 @@ function sendResetPassword(){
 
 $('#resetPassword').on('submit', function() {
     event.preventDefault()
-    console.log('1')
     const password = $('#password').val();
     const confirmPassword = $('#newPassword').val();
     const inputPassword =  $("#newPassword");
@@ -76,7 +75,7 @@ $('#resetPassword').on('submit', function() {
     const passwordRequirements = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+={}\[\]:;"'<>,.?~`-]{8,}$/;
 
     if (!passwordRequirements.test(password)) {
-       $(".popup").addClass("show")
+       $(".popup-error").addClass("show")
         return;
     }
 
